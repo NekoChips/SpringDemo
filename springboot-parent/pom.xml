@@ -11,6 +11,7 @@
 
     <properties>
             <springboot.version>2.2.1.RELEASE</springboot.version>
+            <fastjson.version>1.2.47</fastjson.version>
     </properties>
 
     <dependencies>
@@ -47,7 +48,7 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
-            <version>1.2.47</version>
+            <version>${fastjson.version}</version>
         </dependency>
     </dependencies>
 
