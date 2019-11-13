@@ -12,7 +12,6 @@ import org.springframework.data.redis.core.ListOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
-
 /**
  * ClassName: RedisTool <br/>
  * Description: RedisTool 相关<br/>
@@ -53,7 +52,7 @@ public class RedisTool
         }
         catch (Exception e)
         {
-            logger.error("RedisUtil.putString failed, key:{}, value:{}, expireTime:{}", key, value, expireTime);
+            logger.error("RedisTool.putString failed, key:{}, value:{}, expireTime:{}", key, value, expireTime);
         }
         return false;
     }
@@ -72,7 +71,7 @@ public class RedisTool
         }
         catch (Exception e)
         {
-            logger.error("RedisUtil.getValue failed, key:{}", key);
+            logger.error("RedisTool.getValue failed, key:{}", key);
         }
         return null;
     }
@@ -100,7 +99,7 @@ public class RedisTool
         }
         catch (Exception e)
         {
-            logger.error("RedisUtil.putList failed, key:{}, expireTime:{}", key, expireTime);
+            logger.error("RedisTool.putList failed, key:{}, expireTime:{}", key, expireTime);
         }
         return false;
     }
@@ -124,7 +123,7 @@ public class RedisTool
         }
         catch (Exception e)
         {
-            logger.error("RedisUtil.getList failed, key:{}", key);
+            logger.error("RedisTool.getList failed, key:{}", key);
         }
         return list;
     }
@@ -144,7 +143,7 @@ public class RedisTool
         }
         catch (Exception e)
         {
-            logger.error("RedisUtil.putHash failed, key:{}, hashKey:{}, hashValue:{}", key, hashKey, hashValue);
+            logger.error("RedisTool.putHash failed, key:{}, hashKey:{}, hashValue:{}", key, hashKey, hashValue);
         }
         return false;
     }
@@ -162,7 +161,7 @@ public class RedisTool
         }
         catch (Exception e)
         {
-            logger.error("RedisUtil.getAllHashValue failed, key:{}", key);
+            logger.error("RedisTool.getAllHashValue failed, key:{}", key);
         }
         return null;
     }
@@ -183,7 +182,7 @@ public class RedisTool
         }
         catch (Exception e)
         {
-            logger.error("RedisUtil.getValue failed, key:{}, hashKey:{}", key, hashKey);
+            logger.error("RedisTool.getValue failed, key:{}, hashKey:{}", key, hashKey);
         }
         return null;
     }
@@ -205,7 +204,7 @@ public class RedisTool
         }
         catch (Exception e)
         {
-            logger.error("RedisUtil.putSet failed, key:{}, value:{}", key, value);
+            logger.error("RedisTool.putSet failed, key:{}, value:{}", key, value);
         }
         return false;
     }
@@ -224,7 +223,7 @@ public class RedisTool
         }
         catch (Exception e)
         {
-            logger.error("RedisUtil.getSet failed, key:{}", key);
+            logger.error("RedisTool.getSet failed, key:{}", key);
         }
         return set;
     }
@@ -244,7 +243,7 @@ public class RedisTool
         }
         catch (Exception e)
         {
-            logger.error("RedisUtil.putZSet failed, key:{}, value:{}, score:{}", key, value, score);
+            logger.error("RedisTool.putZSet failed, key:{}, value:{}, score:{}", key, value, score);
         }
         return false;
     }
@@ -265,7 +264,7 @@ public class RedisTool
         }
         catch (Exception e)
         {
-            logger.error("RedisUtil.getZSet failed, key:{}", key);
+            logger.error("RedisTool.getZSet failed, key:{}", key);
         }
         return set;
     }
@@ -283,7 +282,7 @@ public class RedisTool
         }
         catch (Exception e)
         {
-            logger.error("RedisUtil.delete failed, key:{}" , key);
+            logger.error("RedisTool.delete failed, key:{}", key);
         }
         return false;
     }
@@ -305,7 +304,7 @@ public class RedisTool
         }
         catch (Exception e)
         {
-            logger.error("RedisUtil.delete failed, key:{}, hashKey:{}" , key, hashKey);
+            logger.error("RedisTool.delete failed, key:{}, hashKey:{}", key, hashKey);
         }
         return false;
     }
@@ -324,7 +323,7 @@ public class RedisTool
         }
         catch (Exception e)
         {
-            logger.error("RedisUtil.setExpireTime failed, key:{}, expireTime:{}" , key, expireTime);
+            logger.error("RedisTool.setExpireTime failed, key:{}, expireTime:{}", key, expireTime);
         }
         return false;
     }

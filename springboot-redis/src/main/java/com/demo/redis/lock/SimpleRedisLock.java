@@ -58,7 +58,7 @@ public class SimpleRedisLock extends RedisLock
         }
         else if (requestId.equals(targetId))
         {
-            logger.info("lock can be released, lockKey:{}, requestId:{}", lockKey, requestId);
+            logger.info("lock can be released, lockKey : {}, requestId : {}", lockKey, requestId);
             return redisTool.delete(lockKey);
         }
         return false;

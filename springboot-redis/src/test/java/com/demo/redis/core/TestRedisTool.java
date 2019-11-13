@@ -30,7 +30,7 @@ public class TestRedisTool
     @Test
     public void testString()
     {
-        redisTool.putString("key1", "strValue1", 60L);
+        redisTool.putString("key1", "strValue1", 60000L);
         // Thread.sleep(1000);
         System.out.println("string : " + redisTool.getValue("key1"));
     }
@@ -88,11 +88,11 @@ public class TestRedisTool
     @Test
     public void testSetExpireTime() throws InterruptedException
     {
-        redisTool.setExpireTime("key3", 10L);
-        redisTool.setExpireTime("key4", 10L);
-        redisTool.setExpireTime("key5", 10L);
+        redisTool.setExpireTime("key3", 1000L);
+        redisTool.setExpireTime("key4", 1000L);
+        redisTool.setExpireTime("key5", 1000L);
 
-        Thread.sleep(10000);
+        Thread.sleep(1000);
         System.out.println("allHashValue : " + redisTool.getAllHashValue("key3"));
         System.out.println("set : " + redisTool.getSet("key4"));
         System.out.println("zset : " + redisTool.getZSet("key5", 0d, 1d));
