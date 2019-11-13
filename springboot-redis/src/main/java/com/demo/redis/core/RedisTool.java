@@ -10,11 +10,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.ListOperations;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.serializer.RedisSerializer;
-import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.stereotype.Component;
 
-import com.alibaba.fastjson.support.spring.FastJsonRedisSerializer;
 
 /**
  * ClassName: RedisTool <br/>
@@ -31,21 +28,7 @@ public class RedisTool
     private Logger logger = LoggerFactory.getLogger(RedisTool.class);
 
     @Autowired
-    private RedisTemplate redisTemplate;
-
-    @Autowired
-    public void configRedisTemplate(RedisTemplate redisTemplate)
-    {
-        RedisSerializer stringSerializer = new StringRedisSerializer();
-        RedisSerializer jsonSerializer = new FastJsonRedisSerializer(Object.class);
-
-        redisTemplate.setKeySerializer(stringSerializer);
-        redisTemplate.setValueSerializer(jsonSerializer);
-        redisTemplate.setHashKeySerializer(stringSerializer);
-        redisTemplate.setHashValueSerializer(jsonSerializer);
-
-        this.redisTemplate = redisTemplate;
-    }
+    private RedisTemplate<String, Object> redisTemplate;
 
     /**
      * 存储 String 类型的数据
