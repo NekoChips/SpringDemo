@@ -315,7 +315,7 @@ public class RedisTool
      * @param expireTime 过期时间
      * @return
      */
-    public boolean setExpireTime(String key, long expireTime)
+    public boolean setExpireTime(String key, Long expireTime)
     {
         try
         {
@@ -327,4 +327,25 @@ public class RedisTool
         }
         return false;
     }
+
+    /**
+     * NX 方式存储值(SET_IF_ABSENT : 如果不存在就保存)
+     * @param key 键
+     * @param value 值
+     * @param expireTime 过期时间
+     * @return
+     */
+    public boolean setNx(String key, String value, Long expireTime)
+    {
+        try
+        {
+            return redisTemplate.opsForValue().setIfAbsent(key, value, expireTime, TimeUnit.MILLISECONDS);
+        }
+        catch (Exception e)
+        {
+            logger.error("RedisTool.setNx failed, key:{}, value:{} expireTime:{}", key, value, expireTime);
+        }
+        return false;
+    }
+
 }

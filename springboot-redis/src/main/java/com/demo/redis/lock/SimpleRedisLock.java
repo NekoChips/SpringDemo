@@ -35,11 +35,11 @@ public class SimpleRedisLock extends RedisLock
         while (System.currentTimeMillis() - requestTimestamp < waitTime)
         {
             String targetId = redisTool.getValue(lockKey);
-            if (StringUtils.isEmpty(targetId) || requestId.equals(targetId))
+            if (StringUtils.isEmpty(targetId))
             {
-                // 锁已被释放或同一个请求再次获取锁（可重入锁），重新上锁并指定 requestId 和过期时间
+                // 锁已被释放
                 logger.info("lock is available, lockKey : {}, requestId : {}", lockKey, requestId);
-                return redisTool.putString(lockKey, requestId, expireTime);
+                return redisTool.setNx(lockKey, requestId, expireTime);
             }
         }
         logger.warn(

@@ -99,9 +99,12 @@ public class TestRedisTool
     }
 
     @Test
-    public void testGetNull()
+    public void testSetNx()
     {
-        System.out.println(String.valueOf(redisTool.getValue("key8")));
+        testString();
+        redisTool.setNx("key1", "strValue2", 60000L);
+
+        System.out.println("string : " + redisTool.getValue("key1"));
     }
 
 }
