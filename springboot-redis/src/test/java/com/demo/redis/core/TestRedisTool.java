@@ -97,4 +97,11 @@ public class TestRedisTool
         System.out.println("set : " + redisTool.getSet("key4"));
         System.out.println("zset : " + redisTool.getZSet("key5", 0d, 1d));
     }
+
+    @Test
+    public void testGetNull()
+    {
+        System.out.println(String.valueOf(redisTool.getValue("key8")));
+    }
+
 }

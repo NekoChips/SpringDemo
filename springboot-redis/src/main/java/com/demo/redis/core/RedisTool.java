@@ -43,7 +43,7 @@ public class RedisTool
         {
             if (null != expireTime)
             {
-                redisTemplate.opsForValue().set(key, value, expireTime, TimeUnit.SECONDS);
+                redisTemplate.opsForValue().set(key, value, expireTime, TimeUnit.MILLISECONDS);
             }
             else
             {
@@ -67,7 +67,8 @@ public class RedisTool
     {
         try
         {
-            return String.valueOf(redisTemplate.opsForValue().get(key));
+            Object result = redisTemplate.opsForValue().get(key);
+            return null == result ? null : String.valueOf(result);
         }
         catch (Exception e)
         {
@@ -176,7 +177,9 @@ public class RedisTool
     {
         try
         {
-            return String.valueOf(redisTemplate.opsForHash().get(key, hashKey));
+            Object result = redisTemplate.opsForHash().get(key, hashKey);
+
+            return null == result ? null : String.valueOf(result);
         }
         catch (Exception e)
         {
@@ -317,7 +320,7 @@ public class RedisTool
     {
         try
         {
-            return redisTemplate.expire(key, expireTime, TimeUnit.SECONDS);
+            return redisTemplate.expire(key, expireTime, TimeUnit.MILLISECONDS);
         }
         catch (Exception e)
         {
