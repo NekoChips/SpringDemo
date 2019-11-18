@@ -2,6 +2,7 @@ package com.demo.redis;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 
 /**
  * ClassName: RedisApplication <br/>
@@ -13,6 +14,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @since JDK 1.8
  */
 @SpringBootApplication
+@EnableEurekaClient
 public class RedisApplication
 {
     public static void main(String[] args)

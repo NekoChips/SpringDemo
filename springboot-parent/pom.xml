@@ -9,40 +9,44 @@
     <version>1.0</version>
     <packaging>pom</packaging>
 
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.1.9.RELEASE</version>
+    </parent>
+
     <properties>
-            <springboot.version>2.2.1.RELEASE</springboot.version>
-            <fastjson.version>1.2.47</fastjson.version>
+        <java.version>1.8</java.version>
+        <springboot.version>2.1.9.RELEASE</springboot.version>
+        <springcloud.version>Greenwich.SR3</springcloud.version>
+        <fastjson.version>1.2.47</fastjson.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
-            <version>${springboot.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-            <version>${springboot.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
-            <version>${springboot.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>
-            <version>${springboot.version}</version>
         </dependency>
         <!-- hot deploy -->
-       <!-- <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-devtools</artifactId>
-            <version>${springboot.version}</version>
-            <scope>runtime</scope>
-        </dependency>-->
+        <!-- <dependency>
+             <groupId>org.springframework.boot</groupId>
+             <artifactId>spring-boot-devtools</artifactId>
+             <version>${springboot.version}</version>
+             <scope>runtime</scope>
+         </dependency>-->
 
         <!-- import fasjson dependency -->
         <dependency>
@@ -52,5 +56,16 @@
         </dependency>
     </dependencies>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${springcloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
 </project>
