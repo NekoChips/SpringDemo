@@ -1,143 +1,75 @@
 package com.demo.security.service.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.demo.security.bean.AuthorityEntity;
+import com.demo.security.bean.RoleEntity;
+import com.demo.security.bean.UserEntity;
+import com.demo.security.mapper.UserMapper;
+import com.demo.security.service.IAuthService;
+import com.demo.security.service.IRoleService;
+import com.demo.security.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.demo.security.bean.entity.Permission;
-import com.demo.security.bean.entity.Role;
-import com.demo.security.bean.entity.User;
-import com.demo.security.bean.entity.UserRole;
-import com.demo.security.dao.UserDao;
-import com.demo.security.dao.UserDeptDao;
-import com.demo.security.dao.UserRoleDao;
-import com.demo.security.service.DeptService;
-import com.demo.security.service.RoleService;
-import com.demo.security.service.UserService;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * ClassName: UserServiceImpl <br/>
- * Description: UserServiceImpl 相关<br/>
- * date: 2019/11/25 16:03<br/>
- *
- * @author Chenyangjie<br />
- * @version 1.0
- * @since JDK 1.8
+ * @author Yangjie.Chen
+ * @description 用户 service 实现类
+ * @date 2020/3/12
  */
 @Service
-public class UserServiceImpl implements UserService
-{
-    private static Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
+public class UserServiceImpl implements IUserService, UserDetailsService {
 
     @Autowired
-    private UserDao userDao;
+    private UserMapper userMapper;
 
     @Autowired
-    private UserDeptDao userDeptDao;
+    private IRoleService roleService;
 
     @Autowired
-    private UserRoleDao userRoleDao;
+    private IAuthService authService;
 
     @Autowired
-    private DeptService deptService;
-
-    @Autowired
-    private RoleService roleService;
-
-    private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    private PasswordEncoder passwordEncoder;
 
     @Override
-    public int saveOneUser(User user)
-    {
-        return 0;
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        UserEntity user = new UserEntity();
+        user.setUsername(username);
+        QueryWrapper<UserEntity> wrapper = new QueryWrapper<>(user);
+
+        UserEntity existUser = userMapper.selectOne(wrapper);
+        // 设置用户方法级权限
+        existUser.setAuthorities(listAuthById(existUser.getUserId()));
+        // 设置用户角色级权限
+        existUser.setRoles(listRoleById(existUser.getUserId()));
+
+        return new User(username, existUser.getPassword(), existUser.isEnabled(),
+                existUser.isAccountNonExpired(), existUser.isCredentialsNonExpired(),
+                existUser.isAccountNonLocked(), existUser.getAuthorities());
     }
 
     @Override
-    public boolean saveUsers(List<User> users)
-    {
-        return false;
+    public List<RoleEntity> listRoleById(String userId) {
+        return roleService.listByUser(userId);
     }
 
     @Override
-    public int updateUser(User user)
-    {
-        return 0;
-    }
-
-    @Override
-    public int deleteUser(String userId)
-    {
-        return 0;
-    }
-
-    @Override
-    public boolean deleteUsers(String userIds)
-    {
-        return false;
-    }
-
-    @Override
-    public User queryUserById(String userId)
-    {
-        User user = userDao.selectById(userId);
-        List<String> roles = new ArrayList<>();
-        List<String> perms = new ArrayList<>();
-        UserRole urParams = new UserRole(userId);
-        QueryWrapper<UserRole> urWrapper = new QueryWrapper<>(urParams);
-        List<UserRole> userRoles = userRoleDao.selectList(urWrapper);
-        if (!CollectionUtils.isEmpty(userRoles))
-        {
-            userRoles.forEach(userRole ->
-            {
-                Role role = roleService.queryById(userRole.getRoleId());
-                roles.add(role.getRoleName());
-                List<Permission> permissions = role.getPermissions();
-                if (!CollectionUtils.isEmpty(permissions))
-                {
-                    permissions.forEach(permission -> perms.add(permission.getPermName()));
-                }
-            });
+    public List<AuthorityEntity> listAuthById(String userId) {
+        List<RoleEntity> roles = listRoleById(userId);
+        if (!CollectionUtils.isEmpty(roles)) {
+            List<AuthorityEntity> auths = new ArrayList<>();
+            roles.forEach(role -> auths.addAll(authService.listByRole(role.getRoleId())));
+            return auths;
         }
-        user.setRoles(roles);
-        user.setPermissions(perms);
-        return user;
-    }
-
-    @Override
-    public User queryUserByName(String userName)
-    {
-        User userParams = new User();
-        userParams.setUsername(userName);
-        QueryWrapper<User> wrapper = new QueryWrapper<>(userParams);
-        User user = userDao.selectOne(wrapper);
-        user = queryUserById(user.getUserId());
-        return user;
-    }
-
-    @Override
-    public List<User> queryUserList(Map<String, Object> condition)
-    {
         return null;
-    }
-
-    @Override
-    public int addUserToDept(String userId, Integer deptId)
-    {
-        return 0;
-    }
-
-    @Override
-    public int setRoles(String userId, List<Integer> roleIds)
-    {
-        UserRole userRole = new UserRole(userId, roleIds.get(0));
-        return userRoleDao.insert(userRole);
     }
 }
