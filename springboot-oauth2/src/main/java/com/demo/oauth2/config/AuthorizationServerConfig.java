@@ -61,11 +61,13 @@ public class AuthorizationServerConfig  extends AuthorizationServerConfigurerAda
         return new JdbcClientDetailsService(dataSource);
     }
 
+    // 客户端认证配置
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.withClientDetails(clientService());
     }
 
+    // 用户认证环境配置
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
         endpoints

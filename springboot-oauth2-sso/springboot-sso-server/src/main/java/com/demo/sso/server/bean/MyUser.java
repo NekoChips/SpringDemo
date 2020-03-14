@@ -1,4 +1,4 @@
-package com.demo.oauth2.bean;
+package com.demo.sso.server.bean;
 
 import java.io.Serializable;
 
