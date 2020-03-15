@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.common.exceptions.UnapprovedClientAuthenticationException;
 import org.springframework.security.oauth2.provider.*;
@@ -45,6 +46,10 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
     @Autowired
     private AuthorizationServerTokenServices authorizationServerTokenServices;
 
+    // 注入密码加密、校验器
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws IOException, ServletException {
@@ -81,7 +86,7 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
         if (clientDetails == null) {
             logger.error("no matched client detail, clientId: {}", clientId);
             throw new UnapprovedClientAuthenticationException("no exist client details , clientId: " + clientId);
-        } else if (!clientSecret.equals(clientDetails.getClientSecret())) {
+        } else if (!passwordEncoder.matches(clientSecret, clientDetails.getClientSecret())) {
             logger.error("client secret was wrong, clientSecret: {}", clientSecret);
             throw new UnapprovedClientAuthenticationException("client secret not matched");
         }

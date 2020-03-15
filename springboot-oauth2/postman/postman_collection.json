@@ -1,0 +1,230 @@
+{
+	"info": {
+		"_postman_id": "074350a5-f40f-41c8-83e7-884da64fcc23",
+		"name": "Springboot-OAuth2-Test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "授权码方式获取token",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic dGVzdDp0ZXN0XzEyMzQ1Ng==",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8080/oauth/token?grant_type=authorization_code&code=KiaeNt&client_id=test&redirect_uri=https://chenyangjie.com.cn&scope=all",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"oauth",
+						"token"
+					],
+					"query": [
+						{
+							"key": "grant_type",
+							"value": "authorization_code",
+							"description": "授权方式，authorization_code表示授权码方式"
+						},
+						{
+							"key": "code",
+							"value": "KiaeNt",
+							"description": "刚获取到的授权码"
+						},
+						{
+							"key": "client_id",
+							"value": "test",
+							"description": "客户端id"
+						},
+						{
+							"key": "redirect_uri",
+							"value": "https://chenyangjie.com.cn",
+							"description": "重定向地址"
+						},
+						{
+							"key": "scope",
+							"value": "all",
+							"description": "权限作用域"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "密码方式获取token令牌",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic dGVzdDp0ZXN0XzEyMzQ1Ng==",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8080/oauth/token?grant_type=password&username=admin&password=123456&scope=all",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"oauth",
+						"token"
+					],
+					"query": [
+						{
+							"key": "grant_type",
+							"value": "password",
+							"description": "密码方式授权\n"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"description": "用户名"
+						},
+						{
+							"key": "password",
+							"value": "123456",
+							"description": "密码"
+						},
+						{
+							"key": "scope",
+							"value": "all",
+							"description": "权限作用域"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "使用token访问资源",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "bearer d27a5db5-bc74-413e-ac23-c00133f3dbcb",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8080/test/authInfo",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"test",
+						"authInfo"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "用户认证成功后返回token令牌",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic dGVzdDp0ZXN0XzEyMzQ1Ng==",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8080/login?username=admin&password=123456",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"login"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "admin"
+						},
+						{
+							"key": "password",
+							"value": "123456"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "使用jwtToken访问资源",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJhZG1pbiIsInNjb3BlIjpbImFsbCJdLCJzZWNyZXQiOiJwcml2YXRlX3NlY3JldCIsImV4cCI6MTU4NDI0OTAwMywiYXV0aG9yaXRpZXMiOlsiYWRtaW4iXSwianRpIjoiMDljMzQwYmQtZTI0MC00N2QxLWI5MzctYTM2NzllNDhiOTQwIiwiY2xpZW50X2lkIjoidGVzdCJ9.sUa6srkIfGBlsW8TuRd4iyXZfvtKfWQ3Yu8fQrCGKTA",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8080/test/authInfo",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"test",
+						"authInfo"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "使用 refresh_token 获取新的 token 令牌",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic dGVzdDp0ZXN0XzEyMzQ1Ng==",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8080/oauth/token?grant_type=refresh_token&refresh_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJhZG1pbiIsInNjb3BlIjpbImFsbCJdLCJhdGkiOiIyMzY2Njg4Mi0zYjczLTRhNjQtODM2MC1mZjRkY2UwZGQwOGEiLCJzZWNyZXQiOiJwcml2YXRlX3NlY3JldCIsImV4cCI6MTU4NDMzMzg4MSwiYXV0aG9yaXRpZXMiOlsiYWRtaW4iXSwianRpIjoiYzQ0ZjU2MjAtMmYwOS00NmYxLTkwYWItOWFjNzQ1MWMzNjQ1IiwiY2xpZW50X2lkIjoidGVzdCJ9.77kAVWdVk86h-gC3MSKGt8JJScOlUe9-wEBqp4U1GnI",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"oauth",
+						"token"
+					],
+					"query": [
+						{
+							"key": "grant_type",
+							"value": "refresh_token",
+							"description": "刷新令牌方式获取新的令牌"
+						},
+						{
+							"key": "refresh_token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJhZG1pbiIsInNjb3BlIjpbImFsbCJdLCJhdGkiOiIyMzY2Njg4Mi0zYjczLTRhNjQtODM2MC1mZjRkY2UwZGQwOGEiLCJzZWNyZXQiOiJwcml2YXRlX3NlY3JldCIsImV4cCI6MTU4NDMzMzg4MSwiYXV0aG9yaXRpZXMiOlsiYWRtaW4iXSwianRpIjoiYzQ0ZjU2MjAtMmYwOS00NmYxLTkwYWItOWFjNzQ1MWMzNjQ1IiwiY2xpZW50X2lkIjoidGVzdCJ9.77kAVWdVk86h-gC3MSKGt8JJScOlUe9-wEBqp4U1GnI",
+							"description": "刷新令牌"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

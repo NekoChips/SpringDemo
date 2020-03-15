@@ -2,7 +2,6 @@ package com.demo.oauth2.service;
 
 import com.demo.oauth2.bean.AuthorityEntity;
 import com.demo.oauth2.bean.RoleEntity;
-import com.demo.oauth2.bean.UserEntity;
 
 import java.util.List;
 
@@ -25,11 +24,4 @@ public interface IUserService {
      * @return
      */
     List<AuthorityEntity> listAuthById(String userId);
-
-    /**
-     * 新增用户
-     * @param user 用户信息
-     * @return
-     */
-    boolean saveUser(UserEntity user);
 }

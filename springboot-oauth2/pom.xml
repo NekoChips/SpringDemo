@@ -8,7 +8,7 @@
     <artifactId>springboot-oauth2</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-    <name>springboot-oauth2-demo</name>
+    <name>springboot-oauth2</name>
     <description>Oauth2 Demo for Springboot</description>
 
     <parent>

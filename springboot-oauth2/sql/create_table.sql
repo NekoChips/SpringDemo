@@ -1,4 +1,4 @@
--- Table structure for oauth_client_details 将请求的路径存在数据表
+-- Table structure for oauth_client_details
 -- ----------------------------
 DROP TABLE IF EXISTS `oauth_client_details`;
 CREATE TABLE `oauth_client_details`

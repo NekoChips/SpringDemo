@@ -64,6 +64,18 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
                 existUser.isAccountNonLocked(), existUser.getAuthorities());
     }
 
+//    @Override
+//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+//        UserEntity user = new UserEntity();
+//        user.setUsername(username);
+//        user.setPassword(passwordEncoder.encode("123456"));
+//        user.setStatus(CommonConstant.VALID.getValue());
+//
+//        return new User(username, user.getPassword(), user.isEnabled(),
+//                user.isAccountNonExpired(), user.isCredentialsNonExpired(),
+//                user.isAccountNonLocked(), AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_ADMIN"));
+//    }
+
     @Override
     public List<RoleEntity> listRoleById(String userId) {
         return roleService.listByUser(userId);
@@ -78,10 +90,5 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
             return auths;
         }
         return null;
-    }
-
-    @Override
-    public boolean saveUser(UserEntity user) {
-        return false;
     }
 }
