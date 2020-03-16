@@ -33,6 +33,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
         // 开启表单登录
         http.formLogin()
+                .loginPage("/login")
                 .loginProcessingUrl("/login")
                 .successHandler(successHandler)
                 .failureHandler(failureHandler)
@@ -44,7 +45,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and()
 
-                // 关闭跨域保护
+                // 关闭跨域请求伪造
                 .csrf().disable();
     }
 }
