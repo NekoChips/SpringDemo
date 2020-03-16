@@ -6,7 +6,7 @@
         <artifactId>springboot-parent</artifactId>
         <groupId>com.demo</groupId>
         <version>1.0</version>
-        <relativePath>../springboot-parent/pom.xml</relativePath>
+        <relativePath/>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
