@@ -40,6 +40,12 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    /**
+     * userDetailsService 方法实现
+     * @param username 用户名
+     * @return
+     * @throws UsernameNotFoundException
+     */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserEntity user = new UserEntity();

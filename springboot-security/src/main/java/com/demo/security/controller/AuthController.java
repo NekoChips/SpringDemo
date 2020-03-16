@@ -42,7 +42,7 @@ public class AuthController {
         if (savedRequest != null) {
             String targetUrl = savedRequest.getRedirectUrl();
             if (StringUtils.endsWithIgnoreCase(targetUrl, ".html")) {
-                redirectStrategy.sendRedirect(request, response, "/login.html");
+                redirectStrategy.sendRedirect(request, response, "/static/login.html");
             }
         }
         return "please login first";

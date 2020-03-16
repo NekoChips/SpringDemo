@@ -29,6 +29,12 @@ public class TestController {
         return "logout success";
     }
 
+    @GetMapping("authInfo")
+    @PreAuthorize("hasAnyAuthority('auth:info','ROLE_SUPER')")
+    public Authentication authInfo(Authentication authentication) {
+        return authentication;
+    }
+
     @GetMapping("testAuth")
     @PreAuthorize("hasAuthority('user:addOne')")
     public String testAuth() {
@@ -40,4 +46,5 @@ public class TestController {
     public String testRole() {
         return "has role to visit";
     }
+
 }

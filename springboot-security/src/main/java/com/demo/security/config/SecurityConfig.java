@@ -24,7 +24,7 @@ import javax.sql.DataSource;
 //@EnableWebSecurity
 // 开启注解
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     // 用户信息查询接口
     @Autowired
@@ -42,7 +42,7 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private DataSource dataSource;
 
-    // session 相关配置
+    // session 限制登录相关配置
     @Autowired
     private MySessionExpiredStrategy sessionExpiredStrategy;
 
@@ -52,7 +52,7 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-    // 自定义 token 持久化对象
+    // jdbcToken 持久化对象
     @Bean
     public PersistentTokenRepository tokenRepository() {
         JdbcTokenRepositoryImpl jdbcTokenRepository = new JdbcTokenRepositoryImpl();
@@ -66,17 +66,17 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
         // 表单认证方式
         http.formLogin()
                 // 配置登录页面
-//                .loginPage("/login.html")
-                .loginPage("/auth/login")
+                .loginPage("/login.html")
+//                .loginPage("/auth/login")
                 // 处理表单登录
                 .loginProcessingUrl("/login")
                 // 配置认证成功处理器
                 .successHandler(successHandler)
                 // 配置认证失败处理器
                 .failureHandler(failureHandler)
-                .and()
 
-                // 记住我 相关配置
+                .and()
+                // rememberMe 相关配置
                 .rememberMe()
                 // token持久化仓库
                 .tokenRepository(tokenRepository())
@@ -88,8 +88,8 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
 
                 // 配置相关授权
                 .authorizeRequests()
-                // 不拦截跳转到 login.html 的请求
-                .antMatchers("/auth/login", "/login.html", "/auth/session/invalid", "/logout/success").permitAll()
+                // 不拦截的请求
+                .antMatchers("/login.html","/auth/session/invalid", "/logout/success").permitAll()
                 // 所有的请求都需要经过认证
                 .anyRequest().authenticated()
 
@@ -108,8 +108,9 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/logout/success")
                 .deleteCookies("JSESSIONID")
+
                 .and()
-                // 关闭跨域保护
+                // 关闭跨域请求伪造
                 .csrf().disable();
     }
 

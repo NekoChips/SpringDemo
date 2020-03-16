@@ -8,9 +8,8 @@
     <artifactId>springboot-security</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-    <properties>
-        <spring-session.version>1.3.1.RELEASE</spring-session.version>
-    </properties>
+    <name>springboot-security-demo</name>
+    <description>Demo Project for SpringBoot-Security</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
