@@ -23,7 +23,7 @@ public class RsaUtils {
 
     private static final String ENCRYPT_ALGORITHM = "RSA";
 
-    private static final int KEY_SIZE = 1024;
+    private static final int KEY_SIZE = 2048;
 
     // 用于存放随机生成的密钥对
     public static Map<String, String> keyMap = new HashMap<>(2);
@@ -31,9 +31,9 @@ public class RsaUtils {
     /**
      * 随机生成密钥对
      *
-     * @return 密钥对 map
+     * @return 密钥对
      */
-    public static Map<String, String> getKeyPair() throws NoSuchAlgorithmException {
+    public static KeyPair getKeyPair() throws NoSuchAlgorithmException {
         // 基于 RSA 算法生成 keyPairGenerator ，用于生成密钥对
         KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(ENCRYPT_ALGORITHM);
         // 使用随机数初始化 keyPairGenerator
@@ -44,10 +44,11 @@ public class RsaUtils {
         RSAPublicKey publicKey = (RSAPublicKey) keyPair.getPublic();
         RSAPrivateKey privateKey = (RSAPrivateKey) keyPair.getPrivate();
 
+        // 编码后的 密钥对 添加至map
         keyMap.put(PUBLIC_KEY, Base64Utils.encodeToString(publicKey.getEncoded()));
         keyMap.put(PRIVATE_KEY, Base64Utils.encodeToString(privateKey.getEncoded()));
 
-        return RsaUtils.keyMap;
+        return keyPair;
     }
 
     /**

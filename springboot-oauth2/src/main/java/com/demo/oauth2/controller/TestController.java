@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class TestController {
 
-    @GetMapping("index")
-    public Object index(Authentication authentication) {
+    @GetMapping("test/authInfo")
+    public Object authInfo(Authentication authentication) {
         return authentication;
     }
 }
