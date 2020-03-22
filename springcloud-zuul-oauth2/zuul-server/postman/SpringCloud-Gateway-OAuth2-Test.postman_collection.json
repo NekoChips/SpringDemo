@@ -1,0 +1,123 @@
+{
+	"info": {
+		"_postman_id": "e730aee5-195c-4593-a1fc-01c3c1c4baa8",
+		"name": "SpringCloud-Gateway-OAuth2-Test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "登录获取token",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic dGVzdDp0ZXN0XzEyMzQ1Ng==",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8100/oauth/token?grant_type=password&username=admin&password=123456&scope=all",
+					"host": [
+						"localhost"
+					],
+					"port": "8100",
+					"path": [
+						"oauth",
+						"token"
+					],
+					"query": [
+						{
+							"key": "grant_type",
+							"value": "password"
+						},
+						{
+							"key": "username",
+							"value": "admin"
+						},
+						{
+							"key": "password",
+							"value": "123456"
+						},
+						{
+							"key": "scope",
+							"value": "all"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "网关访问权限控制请求",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessToken",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJhZG1pbiIsInNjb3BlIjpbImFsbCJdLCJzZWNyZXQiOiJwcml2YXRlX3NlY3JldCIsImV4cCI6MTU4NDg0Nzg5NSwiYXV0aG9yaXRpZXMiOlsidXNlcjpsaXN0IiwiZGVwdDpkaXNzb2x2ZSIsInJvbGU6dXBkYXRlIiwidXNlcjpwYXNzd29yZCIsImRlcHQ6YWRkIiwicGVybTppbmZvIiwicm9sZTppbmZvIiwicm9sZTphZGQiLCJ1c2VyOnNldFJvbGVzIiwiZGVwdDpsaXN0Iiwicm9sZTpyZW1vdmUiLCJ1c2VyOmluZm8iLCJwZXJtOnVwZGF0ZSIsInJvbGU6bGlzdCIsInBlcm06bGlzdCIsInBlcm06cmVtb3ZlIiwicm9sZTpzZXRQZXJtcyIsImRlcHQ6aW5mbyIsInBlcm06YWRkIiwidXNlcjp1cGRhdGUiLCJ1c2VyOnJlbW92ZSIsImRlcHQ6dXBkYXRlIiwidXNlcjpzZXREZXB0IiwiUk9MRV9BRE1JTiIsInVzZXI6YWRkT25lIl0sImp0aSI6IjRhOWU5ZmM5LTdhYjMtNGVlYi1hMDhjLThiODgyNTA0YTY0OCIsImNsaWVudF9pZCI6InRlc3QifQ.PKOwYJybEXEDT9RKOaNNQJVDqykGjOkohjnHbTrjTTQ",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8000/user/test/info",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"user",
+						"test",
+						"info"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "查看当前用户的授权信息",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessToken",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJhZG1pbiIsInNjb3BlIjpbImFsbCJdLCJzZWNyZXQiOiJwcml2YXRlX3NlY3JldCIsImV4cCI6MTU4NDg0Nzg5NSwiYXV0aG9yaXRpZXMiOlsidXNlcjpsaXN0IiwiZGVwdDpkaXNzb2x2ZSIsInJvbGU6dXBkYXRlIiwidXNlcjpwYXNzd29yZCIsImRlcHQ6YWRkIiwicGVybTppbmZvIiwicm9sZTppbmZvIiwicm9sZTphZGQiLCJ1c2VyOnNldFJvbGVzIiwiZGVwdDpsaXN0Iiwicm9sZTpyZW1vdmUiLCJ1c2VyOmluZm8iLCJwZXJtOnVwZGF0ZSIsInJvbGU6bGlzdCIsInBlcm06bGlzdCIsInBlcm06cmVtb3ZlIiwicm9sZTpzZXRQZXJtcyIsImRlcHQ6aW5mbyIsInBlcm06YWRkIiwidXNlcjp1cGRhdGUiLCJ1c2VyOnJlbW92ZSIsImRlcHQ6dXBkYXRlIiwidXNlcjpzZXREZXB0IiwiUk9MRV9BRE1JTiIsInVzZXI6YWRkT25lIl0sImp0aSI6IjRhOWU5ZmM5LTdhYjMtNGVlYi1hMDhjLThiODgyNTA0YTY0OCIsImNsaWVudF9pZCI6InRlc3QifQ.PKOwYJybEXEDT9RKOaNNQJVDqykGjOkohjnHbTrjTTQ",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8000/user/test/auth",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"user",
+						"test",
+						"auth"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
