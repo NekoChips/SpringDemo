@@ -1,10 +1,11 @@
 package com.demo.redis.service;
 
 import com.demo.redis.core.RedisTool;
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.text.StrBuilder;
+import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.*;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -31,11 +32,7 @@ public class TokenService {
 
     public String createToken() {
         String token = String.valueOf(System.currentTimeMillis());
-        StrBuilder cacheKey = new StrBuilder();
-        cacheKey.append(TOKEN_PREFIX).append(token);
-
-        redisTool.putString(cacheKey.toString(), token, null);
-
+        redisTool.putString(TOKEN_PREFIX + token, token, null);
         return token;
     }
 

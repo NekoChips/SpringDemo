@@ -80,7 +80,7 @@
             </exclusions>
         </dependency>
 
-        <!-- 日志 -->
+        <!-- common tool -->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>

@@ -12,6 +12,11 @@
     <artifactId>auth-server</artifactId>
 
     <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
         <!-- security 和 oauth2 -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>

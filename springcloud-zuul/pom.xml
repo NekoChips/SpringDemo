@@ -43,7 +43,7 @@
             <version>${nacos.version}</version>
         </dependency>
 
-        <!-- 日志 -->
+        <!-- common tool -->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
