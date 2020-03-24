@@ -1,0 +1,27 @@
+server:
+  address: localhost
+  port: 8100
+
+spring:
+
+  application:
+    name: auth-server
+
+  cloud:
+    nacos:
+      discovery:
+        ip: ${server.address}
+        port: ${server.port}
+        server-addr: localhost:8848
+
+  ## 数据库 配置
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/demo?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    username: demo
+    password: demo
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 3
+      max-lifetime: 3600
+      connection-test-query: SELECT 1

@@ -1,0 +1,19 @@
+server:
+  address: localhost
+  port: 8082
+
+spring:
+  application:
+    name: consul-consumer
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        tags: version=1.0,author=nekochips
+        instance-id: ${spring.application.name}
+        prefer-ip-address: true
+        ip-address: ${server.address}
+        port: ${server.port}
+        health-check-interval: 5s
+        health-check-path: /actuator/health

@@ -1,0 +1,22 @@
+server:
+  address: localhost
+  port: 8761
+
+spring:
+  application:
+    name: eureka-server
+
+eureka:
+  instance:
+    hostname: ${server.address}
+  client:
+    ## 是否注册到 eureka 上，单个 eureka 节点配置 false， 默认为true
+    register-with-eureka: false
+    ## 是否从 eureka 上获取服务信息，单个 eureka 节点配置 false， 默认为true
+    fetch-registry: false
+    ## 指定 eureka 服务地址
+    service-url:
+      defaultZone: http://${server.address}:${server.port}/eureka
+  server:
+    ## 关闭保护模式，(eureka 短时间内丢失过多客户端时，eureka进入的保护模式)
+#    enable-self-preservation: false

@@ -1,0 +1,14 @@
+server:
+  address: localhost
+  port: 8080
+
+spring:
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password: 123456
+    ## 连接 redis 超时时间
+    timeout: 3000
+    ## 超过该时间，不再去请求锁
+    lock:
+      timeout: 3000

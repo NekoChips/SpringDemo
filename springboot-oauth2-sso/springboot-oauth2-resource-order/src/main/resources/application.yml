@@ -1,0 +1,31 @@
+server:
+  address: localhost
+  port: 9092
+  servlet:
+    context-path: /order-service
+
+## security oauth2 配置
+security:
+  oauth2:
+    client:
+      client-id: app-order
+      client-secret: order_123456
+      ## 指定认证服务器 /oauth/authorize 认证地址
+      user-authorization-uri: http://localhost:8080/auth-server/oauth/authorize
+      ## 指定认证服务器 /oauth/token 获取 token 的地址
+      access-token-uri: http://localhost:8080/auth-server/oauth/token
+    ## 配置资源服务
+    resource:
+      ## 指定认证服务器 /oauth/check_token 用于检验 token 合法性
+      token-info-uri: http://localhost:8080/auth-server/oauth/check_token
+      jwt:
+        ## 指定认证服务器 /oauth/token_key 用于获取 token的加密密钥
+        key-uri: http://localhost:8080/auth-server/oauth/token_key
+
+spring:
+  ## 数据库 配置
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/demo?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    username: demo
+    password: demo

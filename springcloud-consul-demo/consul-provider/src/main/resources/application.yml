@@ -1,0 +1,18 @@
+server:
+  address: localhost
+  port: 8081
+spring:
+  application:
+    name: consul-provider
+  cloud:
+    consul:
+      host: 127.0.0.1
+      port: 8500
+      discovery:
+        tags: version=1.0,author=nekochips
+        instance-id: ${spring.application.name}
+        prefer-ip-address: true
+        ip-address: ${server.address}
+        port: ${server.port}
+        health-check-interval: 5s
+        health-check-path: /healthCheck

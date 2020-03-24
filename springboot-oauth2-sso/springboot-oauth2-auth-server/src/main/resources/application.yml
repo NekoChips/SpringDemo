@@ -1,0 +1,13 @@
+server:
+  address: localhost
+  port: 8080
+  servlet:
+    context-path: /auth-server
+
+spring:
+  ## 数据库 配置
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/demo?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    username: demo
+    password: demo

@@ -1,0 +1,33 @@
+server:
+  address: localhost
+  port: 8000
+
+spring:
+  application:
+    name: zuul-server
+  cloud:
+    nacos:
+      discovery:
+        ip: ${server.address}
+        port: ${server.port}
+        server-addr: localhost:8848
+
+zuul:
+  routes:
+    auth-server:
+      path: /auth/**
+      sensitiveHeaders:
+      serviceId: auth-server
+
+    user-service:
+      path: /user/**
+      sensitiveHeaders:
+      serviceId: user-service
+
+    order-service:
+      path: /order/**
+      sensitiveHeaders:
+      serviceId: order-service
+  host:
+    connect-timeout-millis: 5000
+    socket-timeout-millis: 10000

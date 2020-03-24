@@ -1,0 +1,41 @@
+server:
+  address: localhost
+  port: 9001
+
+spring:
+
+  application:
+    name: user-service
+
+  cloud:
+    nacos:
+      discovery:
+        ip: ${server.address}
+        port: ${server.port}
+        server-addr: localhost:8848
+
+  ## 数据库 配置
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/demo?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    username: demo
+    password: demo
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 3
+      max-lifetime: 3600
+      connection-test-query: SELECT 1
+
+## security oauth2 配置
+security:
+  oauth2:
+    client:
+      client-id: app-user
+      client-secret: user_123456
+    ## 配置资源服务
+    resource:
+      ## 指定认证服务器 /oauth/check_token 用于检验 token 合法性
+      token-info-uri: http://localhost:8100/oauth/check_token
+      jwt:
+        ## 指定认证服务器 /oauth/token_key 用于获取 token的加密密钥
+        key-uri: http://localhost:8100/oauth/token_key

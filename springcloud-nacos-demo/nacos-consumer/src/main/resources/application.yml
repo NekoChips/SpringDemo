@@ -1,0 +1,13 @@
+server:
+  address: localhost
+  port: 8082
+
+spring:
+  application:
+    name: nacos-consumer
+  cloud:
+    nacos:
+      discovery:
+        ip: ${server.address}
+        port: ${server.port}
+        server-addr: localhost:8848

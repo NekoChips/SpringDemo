@@ -1,0 +1,17 @@
+server:
+  address: localhost
+  port: 9002
+
+spring:
+  application:
+    name: eureka-consumer
+
+eureka:
+  instance:
+    instance-id: ${server.address}:${server.port}
+
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
