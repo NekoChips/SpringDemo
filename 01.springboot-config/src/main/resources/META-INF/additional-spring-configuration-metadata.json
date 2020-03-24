@@ -1,0 +1,13 @@
+{
+  "properties": [
+    {
+      "name": "neko.blog.name",
+      "type": "java.lang.String",
+      "description": "Description for neko.blog.name."
+    },
+    {
+      "name": "neko.blog.url",
+      "type": "java.lang.String",
+      "description": "Description for neko.blog.url."
+    }
+  ] }
