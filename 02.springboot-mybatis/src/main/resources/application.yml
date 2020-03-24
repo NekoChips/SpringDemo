@@ -1,0 +1,65 @@
+server:
+  port: 8080
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    ## 连接池配置
+    druid:
+      ## 数据库连接
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://127.0.0.1:3306/demo?useUnicode=true&characterEncoding=utf-8&useSSL=false
+      username: demo
+      password: demo
+      ## 初始化大小
+      initial-size: 5
+      ## 最小连接数
+      min-idle: 1
+      ## 最大连接数
+      max-active: 20
+      ## 连接等待超时时间 30s
+      max-wait: 30000
+      ## 检测可以关闭的空闲连接间隔时间 60s
+      time-between-eviction-runs-millis: 60000
+      ## 连接池中连接的最小生存时间 30s
+      min-evictable-idle-time-millis: 30000
+      validation-query: SELECT '1'
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      ## 打开 PSCache，指定每个连接的 PSCache 大小
+      pool-prepared-statements: true
+      max-open-prepared-statements: 20
+      max-pool-prepared-statement-per-connection-size: 20
+      ## 配置状态监控
+      filter:
+        stat:
+          enabled: true
+          db-type: mysql
+          log-slow-sql: true
+          slow-sql-millis: 2000
+
+      ## 配置监控过滤器
+      web-stat-filter:
+        enabled: true
+        ## 添加过滤规则
+        url-pattern: /*
+        ## 忽略过滤的格式
+        exclusions: '*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*'
+
+      ## 监控页面配置
+      stat-view-servlet:
+        enabled: true
+        # 访问路径为/druid时，跳转到StatViewServlet
+        url-pattern: /druid/*
+        # 是否能够重置数据
+        reset-enable: false
+        # 需要账号密码才能访问控制台
+        login-username: admin
+        login-password: 123456
+        # IP白名单
+        # allow: 127.0.0.1
+        #　IP黑名单（共同存在时，deny优先于allow）
+        # deny: 192.168.1.106
+
+      ## 配置 Spring 监控 AOP 切入点
+      aop-patterns: com.demo.mybatis.service.*

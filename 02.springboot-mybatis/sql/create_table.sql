@@ -1,0 +1,6 @@
+CREATE TABLE tb_user_info
+(
+    U_ID            VARCHAR(10) PRIMARY KEY,
+    U_NAME          VARCHAR(20) NOT NULL,
+    LAST_LOGIN_TIME VARCHAR(36)
+);
