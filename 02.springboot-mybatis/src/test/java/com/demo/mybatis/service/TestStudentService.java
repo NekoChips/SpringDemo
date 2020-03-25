@@ -2,7 +2,6 @@ package com.demo.mybatis.service;
 
 import com.demo.mybatis.MybatisDemoApplication;
 import com.demo.mybatis.bean.Student;
-import com.demo.mybatis.service.impl.StudentServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

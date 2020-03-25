@@ -3,13 +3,21 @@ server:
 spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
-    ## 连接池配置
     druid:
-      ## 数据库连接
-      driver-class-name: com.mysql.cj.jdbc.Driver
-      url: jdbc:mysql://127.0.0.1:3306/demo?useUnicode=true&characterEncoding=utf-8&useSSL=false
-      username: demo
-      password: demo
+      db1:
+        ## 数据库连接
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://127.0.0.1:3306/demo?useUnicode=true&characterEncoding=utf-8&useSSL=false
+        username: demo
+        password: demo
+      db2:
+        ## 数据库连接
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&characterEncoding=utf-8&useSSL=false
+        username: test
+        password: test
+
+      ## 连接池配置
       ## 初始化大小
       initial-size: 5
       ## 最小连接数
