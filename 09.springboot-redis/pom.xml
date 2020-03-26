@@ -20,9 +20,8 @@
 
     <properties>
         <java.version>1.8</java.version>
-        <redis.version>2.9.3</redis.version>
-        <spring.cloud.version>Greenwich.SR3</spring.cloud.version>
-        <fastjson.version>1.2.47</fastjson.version>
+        <spring.mybatis.version>1.3.2</spring.mybatis.version>
+        <druid.version>1.1.10</druid.version>
     </properties>
 
     <dependencies>
@@ -44,24 +43,36 @@
             <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
 
-        <!-- springboot redis starter -->
+        <!-- cache -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-cache</artifactId>
+        </dependency>
+
+        <!-- redis -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
 
-        <!-- jedis client  -->
+        <!-- mysql -->
         <dependency>
-            <groupId>redis.clients</groupId>
-            <artifactId>jedis</artifactId>
-            <version>${redis.version}</version>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
         </dependency>
 
-        <!-- fastjson -->
+        <!-- mybatis -->
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <version>${spring.mybatis.version}</version>
+        </dependency>
+
+        <!-- druid -->
         <dependency>
             <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-            <version>${fastjson.version}</version>
+            <artifactId>druid-spring-boot-starter</artifactId>
+            <version>${druid.version}</version>
         </dependency>
 
         <!-- common tool -->
@@ -71,16 +82,14 @@
         </dependency>
     </dependencies>
 
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-dependencies</artifactId>
-                <version>${spring.cloud.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
 
 </project>

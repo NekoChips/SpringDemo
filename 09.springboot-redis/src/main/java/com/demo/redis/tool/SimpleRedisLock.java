@@ -1,4 +1,4 @@
-package com.demo.redis.lock;
+package com.demo.redis.tool;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -6,8 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
-
-import com.demo.redis.core.RedisTool;
 
 /**
  * ClassName: SimpleRedisLock <br/>
@@ -26,7 +24,7 @@ public class SimpleRedisLock extends RedisLock
     @Autowired
     private RedisTool redisTool;
 
-    @Value("${spring.redis.lock.timeout}")
+    @Value("${spring.cache.lock.timeout}")
     private Long waitTime;
 
     public boolean tryAcquire(String lockKey, String requestId, Long expireTime)
@@ -34,13 +32,14 @@ public class SimpleRedisLock extends RedisLock
         long requestTimestamp = System.currentTimeMillis();
         while (System.currentTimeMillis() - requestTimestamp < waitTime)
         {
-            String targetId = redisTool.getValue(lockKey);
+            String targetId = redisTool.get(lockKey);
             if (StringUtils.isEmpty(targetId))
             {
                 // 锁已被释放
                 logger.info("lock is available, lockKey : {}, requestId : {}", lockKey, requestId);
-                return redisTool.setNx(lockKey, requestId, expireTime);
+                redisTool.put(lockKey, requestId, expireTime);
             }
+            return true;
         }
         logger.warn(
                 "lock is occupied and try acquire lock timeout, please try again later. lockKey : {}, requestId : {}",
@@ -50,7 +49,7 @@ public class SimpleRedisLock extends RedisLock
 
     public boolean tryRelease(String lockKey, String requestId)
     {
-        String targetId = redisTool.getValue(lockKey);
+        String targetId = redisTool.get(lockKey);
         if (StringUtils.isEmpty(targetId))
         {
             logger.warn("lock has acquired or already expired, lockKey : {}", lockKey);

@@ -1,15 +1,13 @@
 package com.demo.redis.core;
 
-import java.util.Arrays;
-import java.util.List;
-
+import com.demo.redis.RedisApplication;
+import com.demo.redis.bean.Student;
+import com.demo.redis.tool.RedisTool;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import com.demo.redis.RedisApplication;
 
 /**
  * ClassName: TestRedisTool <br/>
@@ -28,83 +26,20 @@ public class TestRedisTool
     private RedisTool redisTool;
 
     @Test
-    public void testString()
+    public void string()
     {
-        redisTool.putString("key1", "strValue1", 60000L);
+        redisTool.put("key1", "strValue1", 60L);
         // Thread.sleep(1000);
-        System.out.println("string : " + redisTool.getValue("key1"));
+        System.out.println("string : " + redisTool.get("key1"));
     }
 
     @Test
-    public void testList()
-    {
-        List<String> languages = Arrays.asList("Java", "Python", ".Net", "C#", "C++");
-        redisTool.putList("key2", languages, null);
-        System.out.println("list : " + redisTool.getList("key2"));
+    public void object() {
+        Student student = new Student();
+        student.setStudentId("001");
+        student.setName("Jimmy");
+        student.setSex("F");
+        redisTool.put("key2", student, 60L);
+        System.out.println("key2 : " + redisTool.get("key2"));
     }
-
-    @Test
-    public void testHash()
-    {
-        for (int i = 1; i < 10; i++)
-        {
-            redisTool.putHash("key3", "hashKey" + i, "hashValue" + i);
-        }
-        System.out.println("allHashValue : " + redisTool.getAllHashValue("key3"));
-        System.out.println("oneHash : " + "hashKey3 -- " + redisTool.getValue("key3", "hashKey3"));
-    }
-
-    @Test
-    public void testSet()
-    {
-        for (int i = 1; i < 10; i++)
-        {
-            redisTool.putSet("key4", "setValue" + i);
-        }
-        System.out.println("set : " + redisTool.getSet("key4"));
-    }
-
-    @Test
-    public void testZset()
-    {
-        for (int i = 1; i < 10; i++)
-        {
-            redisTool.putZSet("key5", "zsetValue" + i, Math.random());
-        }
-        System.out.println("zset : " + redisTool.getZSet("key5", 0d, 0.5d));
-    }
-
-    @Test
-    public void testDelete()
-    {
-        redisTool.delete("key2");
-        System.out.println("list : " + redisTool.getList("key2"));
-
-        redisTool.delete("key3", "hashKey3");
-        System.out.println("allHashValue : " + redisTool.getAllHashValue("key3"));
-        System.out.println("oneHash : " + "hashKey3 -- " + redisTool.getValue("key3", "hashKey3"));
-    }
-
-    @Test
-    public void testSetExpireTime() throws InterruptedException
-    {
-        redisTool.setExpireTime("key3", 1000L);
-        redisTool.setExpireTime("key4", 1000L);
-        redisTool.setExpireTime("key5", 1000L);
-
-        Thread.sleep(1000);
-        System.out.println("allHashValue : " + redisTool.getAllHashValue("key3"));
-        System.out.println("set : " + redisTool.getSet("key4"));
-        System.out.println("zset : " + redisTool.getZSet("key5", 0d, 1d));
-    }
-
-    @Test
-    public void testSetNx()
-    {
-        testString();
-        redisTool.setNx("key1", "strValue2", 60000L);
-
-        System.out.println("string : " + redisTool.getValue("key1"));
-    }
-
 }

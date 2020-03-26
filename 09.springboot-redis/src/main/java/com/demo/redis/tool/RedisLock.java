@@ -1,4 +1,4 @@
-package com.demo.redis.lock;
+package com.demo.redis.tool;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
