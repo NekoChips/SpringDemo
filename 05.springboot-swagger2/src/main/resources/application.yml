@@ -1,0 +1,41 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      db1:
+        ## 数据库连接
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://127.0.0.1:3306/demo?useUnicode=true&characterEncoding=utf-8&useSSL=false
+        username: demo
+        password: demo
+      db2:
+        ## 数据库连接
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&characterEncoding=utf-8&useSSL=false
+        username: test
+        password: test
+
+      ## 连接池配置
+      ## 初始化大小
+      initial-size: 5
+      ## 最小连接数
+      min-idle: 1
+      ## 最大连接数
+      max-active: 20
+      ## 连接等待超时时间 30s
+      max-wait: 30000
+      ## 检测可以关闭的空闲连接间隔时间 60s
+      time-between-eviction-runs-millis: 60000
+      ## 连接池中连接的最小生存时间 30s
+      min-evictable-idle-time-millis: 30000
+      validation-query: SELECT '1'
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      ## 打开 PSCache，指定每个连接的 PSCache 大小
+      pool-prepared-statements: true
+      max-open-prepared-statements: 20
+      max-pool-prepared-statement-per-connection-size: 20
