@@ -23,7 +23,7 @@ public class UserEntity implements Serializable, UserDetails {
 
     private static final long serialVersionUID = -517800012387095551L;
 
-    @TableId(value = "U_ID", type = IdType.UUID)
+    @TableId(value = "U_ID", type = IdType.ASSIGN_UUID)
     private String userId;
 
     @TableField(value = "U_NAME")
