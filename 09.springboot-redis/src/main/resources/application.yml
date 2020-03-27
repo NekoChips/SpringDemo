@@ -58,3 +58,10 @@ spring:
     ## 超过该时间，不再去请求锁
     lock:
       timeout: 3000
+
+## debug RedisTool
+logging:
+  level:
+    com.demo.redis.tool: debug
+
+debug: true

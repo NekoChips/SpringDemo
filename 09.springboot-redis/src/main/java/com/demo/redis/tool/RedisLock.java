@@ -21,16 +21,13 @@ public abstract class RedisLock
      * @param lockKey 锁的key
      * @param requestId 请求id
      * @param expireTime 获取锁的过期时间,单位为毫秒
-     * @return
      */
-    public boolean acquire(String lockKey, String requestId, Long expireTime)
+    public void acquire(String lockKey, String requestId, Long expireTime)
     {
         if (tryAcquire(lockKey, requestId, expireTime) && null != lockKey)
         {
             logger.info("try acquire lock success, lockKey : {}, requestId : {}", lockKey, requestId);
-            return true;
         }
-        return false;
     }
 
     /**
@@ -38,7 +35,7 @@ public abstract class RedisLock
      * @param lockKey 锁的key
      * @param requestId 请求id
      * @param expireTime 获取锁的过期时间,单位为秒
-     * @return
+     * @return 尝试获取锁是否成功
      */
     public abstract boolean tryAcquire(String lockKey, String requestId, Long expireTime);
 
@@ -46,23 +43,20 @@ public abstract class RedisLock
      * 释放锁
      * @param lockKey 锁的key
      * @param requestId 请求id
-     * @return
      */
-    public boolean release(String lockKey, String requestId)
+    public void release(String lockKey, String requestId)
     {
         if (tryRelease(lockKey, requestId))
         {
             logger.info("tryRelease lock success, lockKey : {}, requestId : {}", lockKey, requestId);
-            return true;
         }
-        return false;
     }
 
     /**
      * 尝试释放锁，通过子类实现
-     * @param lockKey
-     * @param requestId
-     * @return
+     * @param lockKey 锁的key
+     * @param requestId 请求id
+     * @return 尝试释放锁是否成功
      */
     public abstract boolean tryRelease(String lockKey, String requestId);
 }

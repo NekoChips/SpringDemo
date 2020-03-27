@@ -1,6 +1,5 @@
 package com.demo.redis.core;
 
-import com.demo.redis.RedisApplication;
 import com.demo.redis.bean.Student;
 import com.demo.redis.tool.RedisTool;
 import org.junit.Test;
@@ -8,6 +7,8 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * ClassName: TestRedisTool <br/>
@@ -19,27 +20,60 @@ import org.springframework.test.context.junit4.SpringRunner;
  * @since JDK 1.8
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = RedisApplication.class)
-public class TestRedisTool
-{
+@SpringBootTest
+public class TestRedisTool {
+
+    private static final String CACHE_PREFIX = "cache:student:";
+
     @Autowired
     private RedisTool redisTool;
 
     @Test
-    public void string()
-    {
-        redisTool.put("key1", "strValue1", 60L);
-        // Thread.sleep(1000);
-        System.out.println("string : " + redisTool.get("key1"));
-    }
-
-    @Test
-    public void object() {
+    public void cacheWithExpire() throws InterruptedException {
         Student student = new Student();
         student.setStudentId("001");
         student.setName("Jimmy");
         student.setSex("F");
-        redisTool.put("key2", student, 60L);
-        System.out.println("key2 : " + redisTool.get("key2"));
+        redisTool.put(CACHE_PREFIX + student.getStudentId(), student, 60L);
+
+        Thread.sleep(2000L);
+
+        Student studentCache = redisTool.get(CACHE_PREFIX + student.getStudentId(), Student.class);
+        System.out.println("student from redis : " + studentCache);
+    }
+
+    @Test
+    public void cacheWithTimeUnit() throws InterruptedException {
+        Student student = new Student();
+        student.setStudentId("002");
+        student.setName("Jack");
+        student.setSex("M");
+        redisTool.put(CACHE_PREFIX + student.getStudentId(), student, 30000L, TimeUnit.MILLISECONDS);
+
+        Thread.sleep(2000L);
+
+        String strCache = redisTool.get(CACHE_PREFIX + student.getStudentId());
+        System.out.println("cache string : " + strCache);
+
+        Student studentCache = redisTool.get(CACHE_PREFIX + student.getStudentId(), Student.class);
+        System.out.println("student from redis : " + studentCache);
+    }
+
+    @Test
+    public void delete() {
+        Student student = new Student();
+        student.setStudentId("002");
+        student.setName("Jack");
+        student.setSex("M");
+        redisTool.put(CACHE_PREFIX + student.getStudentId(), student, 30000L, TimeUnit.MILLISECONDS);
+
+        Student studentCache = redisTool.get(CACHE_PREFIX + student.getStudentId(), Student.class);
+        System.out.println("student from redis : " + studentCache);
+
+        System.out.println("delete cache");
+        redisTool.delete(CACHE_PREFIX + student.getStudentId());
+
+        String result = redisTool.get(CACHE_PREFIX + student.getStudentId());
+        System.out.println("student from redis : " + result);
     }
 }

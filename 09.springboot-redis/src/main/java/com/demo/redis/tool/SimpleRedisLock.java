@@ -17,8 +17,7 @@ import org.springframework.util.StringUtils;
  * @since JDK 1.8
  */
 @Component
-public class SimpleRedisLock extends RedisLock
-{
+public class SimpleRedisLock extends RedisLock {
     private Logger logger = LoggerFactory.getLogger(SimpleRedisLock.class);
 
     @Autowired
@@ -27,39 +26,32 @@ public class SimpleRedisLock extends RedisLock
     @Value("${spring.cache.lock.timeout}")
     private Long waitTime;
 
-    public boolean tryAcquire(String lockKey, String requestId, Long expireTime)
-    {
+    public boolean tryAcquire(String lockKey, String requestId, Long expireTime) {
         long requestTimestamp = System.currentTimeMillis();
-        while (System.currentTimeMillis() - requestTimestamp < waitTime)
-        {
+        while (System.currentTimeMillis() - requestTimestamp < waitTime) {
             String targetId = redisTool.get(lockKey);
-            if (StringUtils.isEmpty(targetId))
-            {
+            if (StringUtils.isEmpty(targetId)) {
                 // 锁已被释放
                 logger.info("lock is available, lockKey : {}, requestId : {}", lockKey, requestId);
                 redisTool.put(lockKey, requestId, expireTime);
+                return Boolean.TRUE;
             }
-            return true;
         }
         logger.warn(
                 "lock is occupied and try acquire lock timeout, please try again later. lockKey : {}, requestId : {}",
                 lockKey, requestId);
-        return false;
+        return Boolean.FALSE;
     }
 
-    public boolean tryRelease(String lockKey, String requestId)
-    {
+    public boolean tryRelease(String lockKey, String requestId) {
         String targetId = redisTool.get(lockKey);
-        if (StringUtils.isEmpty(targetId))
-        {
+        if (StringUtils.isEmpty(targetId)) {
             logger.warn("lock has acquired or already expired, lockKey : {}", lockKey);
-            return true;
+            return Boolean.TRUE;
+        } else if (!requestId.equals(targetId)) {
+            logger.warn("lock can not be released by other owner, lockKey : {}, requestId : {}", lockKey, requestId);
+            return Boolean.FALSE;
         }
-        else if (requestId.equals(targetId))
-        {
-            logger.info("lock can be released, lockKey : {}, requestId : {}", lockKey, requestId);
-            return redisTool.delete(lockKey);
-        }
-        return false;
+        return redisTool.delete(lockKey);
     }
 }

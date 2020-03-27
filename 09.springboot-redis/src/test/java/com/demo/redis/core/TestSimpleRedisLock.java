@@ -1,4 +1,4 @@
-package com.demo.redis.lock;
+package com.demo.redis.core;
 
 
 import com.demo.redis.RedisApplication;
@@ -24,7 +24,7 @@ public class TestSimpleRedisLock
 {
     private static final String LOCK_KEY = "redisLock";
 
-    private static final Long LOCK_EXPIRE_TIME = 10000L;
+    private static final Long LOCK_EXPIRE_TIME = 10L;
 
     @Autowired
     private RedisLock redisLock;
