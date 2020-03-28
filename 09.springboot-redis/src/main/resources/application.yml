@@ -55,13 +55,9 @@ spring:
     redis:
       ## 过期时间， 默认为-1, 即没有过期时间
       time-to-live: 60000
-    ## 超过该时间，不再去请求锁
-    lock:
-      timeout: 3000
-
 ## debug RedisTool
-logging:
-  level:
-    com.demo.redis.tool: debug
+#logging:
+#  level:
+#    com.demo.redis.tool: info
 
 debug: true

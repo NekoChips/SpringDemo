@@ -1,7 +1,8 @@
 package com.demo.redis.tool;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * ClassName: RedisLock <br/>
@@ -12,51 +13,77 @@ import org.slf4j.LoggerFactory;
  * @version 1.0
  * @since JDK 1.8
  */
-public abstract class RedisLock
-{
-    private Logger logger = LoggerFactory.getLogger(RedisLock.class);
+public abstract class RedisLock {
+
+    public RedisTool redisTool;
+
+    private String lockUUID;
+
+    public RedisLock(RedisTool redisTool) {
+        this.redisTool = redisTool;
+    }
+
+    public String getLockUUID() {
+        return lockUUID;
+    }
+
+    public void setLockUUID(String lockUUID) {
+        this.lockUUID = lockUUID;
+    }
 
     /**
-     * 获取锁
-     * @param lockKey 锁的key
-     * @param requestId 请求id
-     * @param expireTime 获取锁的过期时间,单位为毫秒
+     * 加锁
      */
-    public void acquire(String lockKey, String requestId, Long expireTime)
-    {
-        if (tryAcquire(lockKey, requestId, expireTime) && null != lockKey)
-        {
-            logger.info("try acquire lock success, lockKey : {}, requestId : {}", lockKey, requestId);
+    public void acquire() {
+        if (tryAcquire()) {
+            redisTool.put(RedisTool.LOCK_NAME, lockUUID);
         }
     }
 
     /**
-     * 尝试获取锁，通过子类实现
-     * @param lockKey 锁的key
-     * @param requestId 请求id
-     * @param expireTime 获取锁的过期时间,单位为秒
-     * @return 尝试获取锁是否成功
+     * 加锁一定时间后自动释放锁
+     *
+     * @param leaseTime 超过该时间，自动释放锁
+     * @param timeUnit  时间单位
      */
-    public abstract boolean tryAcquire(String lockKey, String requestId, Long expireTime);
+    public void acquire(Long leaseTime, TimeUnit timeUnit) {
+        if (tryAcquire()) {
+            redisTool.put(RedisTool.LOCK_NAME, lockUUID, leaseTime, timeUnit);
+        }
+    }
+
+    /**
+     * 尝试加锁
+     *
+     * @return 是否可以加锁
+     */
+    public abstract Boolean tryAcquire();
 
     /**
      * 释放锁
-     * @param lockKey 锁的key
-     * @param requestId 请求id
      */
-    public void release(String lockKey, String requestId)
-    {
-        if (tryRelease(lockKey, requestId))
-        {
-            logger.info("tryRelease lock success, lockKey : {}, requestId : {}", lockKey, requestId);
+    public void release() {
+        if (tryRelease()) {
+            redisTool.delete(RedisTool.LOCK_NAME);
         }
     }
 
     /**
-     * 尝试释放锁，通过子类实现
-     * @param lockKey 锁的key
-     * @param requestId 请求id
-     * @return 尝试释放锁是否成功
+     * 尝试释放锁
+     *
+     * @return 是否可以释放锁
      */
-    public abstract boolean tryRelease(String lockKey, String requestId);
+    public abstract Boolean tryRelease();
+
+    /**
+     * 判断锁是否已经上锁
+     * @return 是否上锁
+     */
+    public Boolean isLocked() {
+        String existLock = redisTool.get(RedisTool.LOCK_NAME);
+        if (StringUtils.isBlank(existLock) || !StringUtils.equals(existLock, lockUUID)) {
+            return Boolean.FALSE;
+        }
+        return Boolean.TRUE;
+    }
 }

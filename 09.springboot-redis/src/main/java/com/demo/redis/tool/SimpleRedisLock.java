@@ -1,11 +1,8 @@
 package com.demo.redis.tool;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 
 /**
  * ClassName: SimpleRedisLock <br/>
@@ -16,42 +13,41 @@ import org.springframework.util.StringUtils;
  * @version 1.0
  * @since JDK 1.8
  */
-@Component
 public class SimpleRedisLock extends RedisLock {
     private Logger logger = LoggerFactory.getLogger(SimpleRedisLock.class);
 
-    @Autowired
-    private RedisTool redisTool;
+    private Long waitTime = 3000L;
 
-    @Value("${spring.cache.lock.timeout}")
-    private Long waitTime;
+    public SimpleRedisLock(RedisTool redisTool) {
+        super(redisTool);
+    }
 
-    public boolean tryAcquire(String lockKey, String requestId, Long expireTime) {
-        long requestTimestamp = System.currentTimeMillis();
-        while (System.currentTimeMillis() - requestTimestamp < waitTime) {
-            String targetId = redisTool.get(lockKey);
-            if (StringUtils.isEmpty(targetId)) {
-                // 锁已被释放
-                logger.info("lock is available, lockKey : {}, requestId : {}", lockKey, requestId);
-                redisTool.put(lockKey, requestId, expireTime);
+    @Override
+    public Boolean tryAcquire() {
+        long startMills = System.currentTimeMillis();
+        String lockUUID = getLockUUID();
+        logger.debug("{} try to acquire the lock {}", Thread.currentThread().getName(), lockUUID);
+        while (System.currentTimeMillis() - startMills < waitTime) {
+            if (!isLocked()) {
                 return Boolean.TRUE;
             }
         }
-        logger.warn(
-                "lock is occupied and try acquire lock timeout, please try again later. lockKey : {}, requestId : {}",
-                lockKey, requestId);
+        logger.debug("{} try to acquire lock {} timeout", Thread.currentThread().getName(), lockUUID);
         return Boolean.FALSE;
     }
 
-    public boolean tryRelease(String lockKey, String requestId) {
-        String targetId = redisTool.get(lockKey);
-        if (StringUtils.isEmpty(targetId)) {
-            logger.warn("lock has acquired or already expired, lockKey : {}", lockKey);
+    @Override
+    public Boolean tryRelease() {
+        String lockUUID = getLockUUID();
+        String existLock = redisTool.get(RedisTool.LOCK_NAME);
+        if (!isLocked()) {
+            logger.debug("lock {} has been released", lockUUID);
             return Boolean.TRUE;
-        } else if (!requestId.equals(targetId)) {
-            logger.warn("lock can not be released by other owner, lockKey : {}, requestId : {}", lockKey, requestId);
-            return Boolean.FALSE;
         }
-        return redisTool.delete(lockKey);
+        if (StringUtils.equals(lockUUID, existLock)) {
+            logger.debug("lock {} can be released", lockUUID);
+            return Boolean.TRUE;
+        }
+        return Boolean.FALSE;
     }
 }

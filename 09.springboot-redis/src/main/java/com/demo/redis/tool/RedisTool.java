@@ -22,6 +22,8 @@ public class RedisTool {
 
     private Logger logger = LoggerFactory.getLogger(RedisTool.class);
 
+    public static final String LOCK_NAME = "cache:lock";
+
     @Autowired
     @SuppressWarnings("rawtypes")
     private RedisTemplate redisTemplate;
