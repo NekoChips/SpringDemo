@@ -1,0 +1,16 @@
+server:
+  port: 8080
+  
+elastic:
+  nodes:
+    - name: es-node1
+      host: localhost
+      port: 9200
+
+    - name: es-node2
+      host: localhost
+      port: 9201
+     
+  username:
+  password:
+  schema: http

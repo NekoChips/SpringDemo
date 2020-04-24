@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "elastic.nodes",
+      "type": "java.lang.String",
+      "description": "Description for elastic.nodes."
+  }
+] }

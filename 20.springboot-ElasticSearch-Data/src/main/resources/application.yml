@@ -1,0 +1,7 @@
+server:
+  port: 8080
+spring:
+  data:
+    elasticsearch:
+      cluster-name: es-cluster
+      cluster-nodes: localhost:9300,localhost:9301
