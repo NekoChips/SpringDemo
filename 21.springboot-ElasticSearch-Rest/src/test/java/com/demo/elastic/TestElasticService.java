@@ -65,7 +65,7 @@ public class TestElasticService {
     @Test
     public void testSearch2() {
         String[] fields = {"lastName", "about"};
-        List<Employee> employees = elasticService.search(TEST_INDEX, fields, "rock, Fir", Employee.class);
+        List<Employee> employees = elasticService.search(TEST_INDEX, fields, "rock Fir", Employee.class);
         employees = Optional.ofNullable(employees)
                 .orElse(new ArrayList<>());
         employees.forEach(System.out::println);
@@ -79,4 +79,10 @@ public class TestElasticService {
         });
     }
     
+    @Test
+    public void testDelete() {
+        String type = Employee.class.getSimpleName();
+        String id = "_hits";
+        elasticService.delete(TEST_INDEX, type, id);
+    }
 }

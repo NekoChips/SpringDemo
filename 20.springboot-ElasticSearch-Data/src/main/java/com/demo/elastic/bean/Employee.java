@@ -6,6 +6,7 @@ import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 /**
  * @author NekoChips
@@ -81,5 +82,17 @@ public class Employee implements Serializable {
 
     public void setInterest(String[] interest) {
         this.interest = interest;
+    }
+
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", age=" + age +
+                ", about='" + about + '\'' +
+                ", interest=" + Arrays.toString(interest) +
+                '}';
     }
 }

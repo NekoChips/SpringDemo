@@ -4,6 +4,7 @@ import com.demo.elastic.props.ElasticProperties;
 import org.apache.http.HttpHost;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestClientBuilder;
+import org.elasticsearch.client.RestHighLevelClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,6 +23,11 @@ public class ElasticConfig
 {
     @Autowired
     private ElasticProperties elasticProperties;
+    
+    @Bean
+    public RestHighLevelClient highLevelClient() {
+        return new RestHighLevelClient(restClientBuilder());
+    }
 
     @Bean
     public RestClientBuilder restClientBuilder()
