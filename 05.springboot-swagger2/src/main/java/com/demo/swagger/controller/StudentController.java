@@ -2,10 +2,7 @@ package com.demo.swagger.controller;
 
 import com.demo.swagger.bean.Student;
 import com.demo.swagger.service.IStudentService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
@@ -20,9 +17,9 @@ import java.util.Optional;
  * @description Student Controller
  * @date 2020/3/26
  */
-@Api(value = "学生 Controller")
+@Api(tags = "学生 Controller")
 @RestController
-@RequestMapping("student")
+@RequestMapping("/api")
 public class StudentController {
 
     @Autowired
@@ -30,7 +27,7 @@ public class StudentController {
 
     @ApiOperation(value = "新增学生信息", notes = "根据学生实体创建学生对象")
     @ApiImplicitParam(name = "student", value = "学生信息", required = true, dataTypeClass = Student.class)
-    @PostMapping("/add")
+    @PostMapping("/student")
     public HttpEntity<?> add(@RequestBody Student student) {
         int count = studentService.add(student);
         return count > 0 ?
@@ -40,7 +37,7 @@ public class StudentController {
 
     @ApiOperation(value = "删除学生信息", notes = "根据学生id删除学生信息")
     @ApiImplicitParam(name = "studentId", value = "学生id", required = true, dataTypeClass = String.class)
-    @DeleteMapping("delete")
+    @DeleteMapping("student")
     public HttpEntity<?> delete(String studentId) {
         int count = studentService.delete(studentId);
         return count > 0 ?
@@ -54,7 +51,7 @@ public class StudentController {
                     "path"),
             @ApiImplicitParam(name = "student", value = "学生信息", required = true, dataType = "Student")
     })
-    @PutMapping("/{studentId}")
+    @PutMapping("/student/{studentId}")
     public HttpEntity<?> update(@PathVariable("studentId") String studentId, @RequestBody() Student student) {
         student.setStudentId(studentId);
         int count = studentService.update(student);
@@ -65,14 +62,14 @@ public class StudentController {
 
     @ApiOperation(value = "查询学生信息", notes = "根据学生id查询学生信息")
     @ApiImplicitParam(name = "studentId", value = "学生id", required = true, dataType = "String")
-    @GetMapping("info")
-    public HttpEntity<?> queryById(String studentId) {
+    @GetMapping("student/{studentId}")
+    public HttpEntity<?> queryById(@PathVariable String studentId) {
         Student student = studentService.queryById(studentId);
         return ResponseEntity.ok(student);
     }
 
     @ApiOperation(value = "查询学生列表", notes = "查询学生列表")
-    @GetMapping("list")
+    @GetMapping("students")
     public HttpEntity<?> queryList() {
         List<Student> students = studentService.queryList();
         return ResponseEntity.ok(students);

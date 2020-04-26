@@ -1,5 +1,8 @@
 package com.demo.swagger.bean;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiParam;
+
 import java.io.Serializable;
 
 /**
@@ -7,6 +10,7 @@ import java.io.Serializable;
  * @description 员工实体类
  * @date 2020/3/25
  */
+@ApiModel(value = "员工信息")
 public class Employee implements Serializable {
 
     private static final long serialVersionUID = 612710393041476403L;
@@ -14,21 +18,25 @@ public class Employee implements Serializable {
     /**
      * 编号
      */
+    @ApiParam(value = "员工编号")
     private String emNo;
 
     /**
      * 姓名
      */
+    @ApiParam(value = "员工姓名")
     private String emName;
 
     /**
      * 性别
      */
+    @ApiParam(value = "员工性别")
     private String emSex;
 
     /**
      * 年龄
      */
+    @ApiParam(value = "员工年龄")
     private int age;
 
     public String getEmNo() {

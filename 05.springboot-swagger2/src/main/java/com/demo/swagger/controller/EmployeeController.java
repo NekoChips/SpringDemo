@@ -19,9 +19,9 @@ import java.util.Optional;
  * @description 员工 Controller
  * @date 2020/3/26
  */
-@Api("员工 Controller")
+@Api(tags = "员工 Controller")
 @RestController()
-@RequestMapping("employee")
+@RequestMapping("/api")
 public class EmployeeController {
 
     @Autowired
@@ -29,7 +29,7 @@ public class EmployeeController {
 
     @ApiOperation(value = "新增员工信息", notes = "根据员工实体创建员工对象")
     @ApiImplicitParam(name = "employee", value = "员工信息", required = true, dataType = "Employee")
-    @PostMapping("add")
+    @PostMapping("employee")
     public HttpEntity<?> add(@RequestBody Employee employee) {
         int count = employeeService.add(employee);
         return count > 0 ?
@@ -39,7 +39,7 @@ public class EmployeeController {
 
     @ApiOperation(value = "删除员工信息", notes = "根据员工编号删除员工信息")
     @ApiImplicitParam(name = "emNo", value = "员工编号", required = true, dataTypeClass = String.class)
-    @DeleteMapping("delete")
+    @DeleteMapping("employee")
     public HttpEntity<?> delete(String emNo) {
         int count = employeeService.delete(emNo);
         return count > 0 ?
@@ -53,7 +53,7 @@ public class EmployeeController {
                     "path"),
             @ApiImplicitParam(name = "employee", value = "员工信息", required = true, dataType = "Employee")
     })
-    @PutMapping("/{emNo}")
+    @PutMapping("/employee/{emNo}")
     public HttpEntity<?> update(@PathVariable("emNo") String emNo, @RequestBody() Employee employee) {
         employee.setEmNo(emNo);
         int count = employeeService.update(employee);
@@ -64,14 +64,14 @@ public class EmployeeController {
 
     @ApiOperation(value = "查询员工信息", notes = "根据员工编号查询员工信息")
     @ApiImplicitParam(name = "emNo", value = "员工编号", required = true, dataType = "String")
-    @GetMapping("info")
+    @GetMapping("employee")
     public HttpEntity<?> queryById(String emNo) {
         Employee employee = employeeService.queryById(emNo);
         return ResponseEntity.ok(employee);
     }
 
     @ApiOperation(value = "查询员工列表", notes = "查询员工列表")
-    @GetMapping("list")
+    @GetMapping("employees")
     public HttpEntity<?> queryList() {
         List<Employee> employees = employeeService.queryList();
         return ResponseEntity.ok(employees);
