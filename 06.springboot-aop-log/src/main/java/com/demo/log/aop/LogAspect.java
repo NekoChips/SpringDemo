@@ -89,6 +89,7 @@ public class LogAspect {
 
     /**
      * 获取当前登录的用户信息
+     *
      * @param joinPoint 切点
      * @return 用户信息
      */
@@ -104,6 +105,7 @@ public class LogAspect {
 
     /**
      * 获取请求参数
+     *
      * @param joinPoint 切点
      * @return 请求参数
      */
@@ -117,7 +119,7 @@ public class LogAspect {
             StringBuilder stringBuilder = new StringBuilder();
             for (int i = 0; i < parameterNames.length; i++) {
                 stringBuilder.append(parameterNames[i]).append(" : ").append(args[i]);
-                if (i < parameterNames.length -1) {
+                if (i < parameterNames.length - 1) {
                     stringBuilder.append(", ");
                 }
             }
