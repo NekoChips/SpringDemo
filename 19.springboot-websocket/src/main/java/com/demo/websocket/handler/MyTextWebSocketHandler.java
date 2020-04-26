@@ -20,11 +20,11 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Component
 public class MyTextWebSocketHandler extends TextWebSocketHandler {
 
-    private Logger logger = LoggerFactory.getLogger(MyTextWebSocketHandler.class);
+    private final Logger logger = LoggerFactory.getLogger(MyTextWebSocketHandler.class);
 
     private final AtomicInteger onlineCount = new AtomicInteger(0);
 
-    private static CopyOnWriteArraySet<WebSocketSession> sessions = new CopyOnWriteArraySet<>();
+    private static final CopyOnWriteArraySet<WebSocketSession> SESSIONS = new CopyOnWriteArraySet<>();
 
     /**
      * 连接建立后调用的方法
@@ -34,7 +34,7 @@ public class MyTextWebSocketHandler extends TextWebSocketHandler {
      */
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-        sessions.add(session);
+        SESSIONS.add(session);
         logger.info("client {} join in, now online number is : {}", session.getId(), onlineCount.incrementAndGet());
         session.sendMessage(new TextMessage("当前客户端会话 ID 为: " + session.getId()));
         groupSendMessage(session.getId(), session.getId() + " 进入聊天室");
@@ -92,7 +92,7 @@ public class MyTextWebSocketHandler extends TextWebSocketHandler {
      * @param message   消息内容
      */
     public void sendMessage(String sessionId, String message) {
-        WebSocketSession targetSession = sessions.stream()
+        WebSocketSession targetSession = SESSIONS.stream()
                 .filter(session -> sessionId.equals(session.getId()))
                 .findAny()
                 .orElse(null);
@@ -115,7 +115,7 @@ public class MyTextWebSocketHandler extends TextWebSocketHandler {
      * @param message       消息内容
      */
     public void groupSendMessage(String sourceSessionId, String message) {
-        sessions.stream()
+        SESSIONS.stream()
                 .filter(WebSocketSession::isOpen)
                 .filter(session -> !session.getId().equals(sourceSessionId))
                 .forEach(session -> sendMessage(session.getId(), message));
