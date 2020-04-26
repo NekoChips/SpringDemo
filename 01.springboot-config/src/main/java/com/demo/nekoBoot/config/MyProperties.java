@@ -73,4 +73,16 @@ public class MyProperties {
     public void setDate(String date) {
         this.date = date;
     }
+
+    @Override
+    public String toString() {
+        return "MyProperties{" +
+                "appName='" + appName + '\'' +
+                ", address='" + address + '\'' +
+                ", port=" + port +
+                ", author='" + author + '\'' +
+                ", version='" + version + '\'' +
+                ", date='" + date + '\'' +
+                '}';
+    }
 }
