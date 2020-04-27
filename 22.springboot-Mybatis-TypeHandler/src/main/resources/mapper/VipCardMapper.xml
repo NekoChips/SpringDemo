@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.demo.crypt.mapper.VipCardMapper">
+    <resultMap id="VipCardMap" type="com.demo.crypt.bean.VipCard">
+        <result property="id" column="id" javaType="Integer"/>
+        <result property="cardNo" column="card_no" typeHandler="com.demo.crypt.core.handler.CryptTypeHandler"/>
+        <result property="name" column="name" typeHandler="com.demo.crypt.core.handler.CryptTypeHandler"/>
+        <result property="idNumber" column="id_number" typeHandler="com.demo.crypt.core.handler.CryptTypeHandler"/>
+        <result property="phoneNumber" column="phone_number"
+                typeHandler="com.demo.crypt.core.handler.CryptTypeHandler"/>
+    </resultMap>
+
+    <sql id="base_column">
+        id, card_no, name, id_number, phone_number
+    </sql>
+
+    <insert id="saveOne" parameterType="com.demo.crypt.bean.VipCard">
+        insert into vip_card
+            (card_no, name, id_number, phone_number)
+        values (#{cardNo, javaType=crypt},
+                #{name, javaType=crypt},
+                #{idNumber, javaType=crypt},
+                #{phoneNumber, javaType=crypt})
+    </insert>
+
+    <select id="findById" resultMap="VipCardMap">
+        select
+        <include refid="base_column"/>
+        from vip_card
+        where id = #{id}
+        limit 1
+    </select>
+
+    <select id="findByNo" resultMap="VipCardMap">
+        select
+        <include refid="base_column"/>
+        from vip_card
+        where card_no in (#{cardNo, javaType=crypt}, #{cardNo})
+        limit 1
+    </select>
+
+    <select id="findByPhone" resultMap="VipCardMap">
+        select
+        <include refid="base_column"/>
+        from vip_card
+        where card_no in (#{phoneNumber, javaType=crypt}, #{phoneNumber})
+        limit 1
+    </select>
+
+</mapper>
