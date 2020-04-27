@@ -35,13 +35,13 @@ public class VipCard implements Serializable {
     /**
      * 身份证号
      */
-    @Pattern(regexp = "(^/d{15}$)|(^/d{18}$)|(^/d{17}(/d|[A-Z])$)", message = "身份证号必须为15位或18位")
+    @Pattern(regexp = "^[1-9]\\d{5}[1-9]\\d{3}((0[1-9])|(1[0-2]))(0[1-9]|([1|2][0-9])|3[0-1])((\\d{4})|\\d{3}X)$", message = "非法身份证号")
     private String idNumber;
 
     /**
      * 手机号
      */
-    @Pattern(regexp = "^1([38][0-9]|4[579]|5[0-3,5-9]|6[6]|7[0135678]|9[89])/d{8}$", message = "手机号必须满足规则")
+    @Pattern(regexp = "^[1](([3|5|8][\\d])|([4][4,5,6,7,8,9])|([6][2,5,6,7])|([7][^9])|([9][1,8,9]))[\\d]{8}$", message = "非法手机号")
     private String phoneNumber;
 
 }
