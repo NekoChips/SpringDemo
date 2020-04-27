@@ -6,11 +6,10 @@
 <mapper namespace="com.demo.crypt.mapper.VipCardMapper">
     <resultMap id="VipCardMap" type="com.demo.crypt.bean.VipCard">
         <result property="id" column="id" javaType="Integer"/>
-        <result property="cardNo" column="card_no" typeHandler="com.demo.crypt.core.handler.CryptTypeHandler"/>
-        <result property="name" column="name" typeHandler="com.demo.crypt.core.handler.CryptTypeHandler"/>
-        <result property="idNumber" column="id_number" typeHandler="com.demo.crypt.core.handler.CryptTypeHandler"/>
-        <result property="phoneNumber" column="phone_number"
-                typeHandler="com.demo.crypt.core.handler.CryptTypeHandler"/>
+        <result property="cardNo" column="card_no" javaType="Crypt"/>
+        <result property="name" column="name" javaType="Crypt"/>
+        <result property="idNumber" column="id_number" javaType="Crypt"/>
+        <result property="phoneNumber" column="phone_number" javaType="Crypt"/>
     </resultMap>
 
     <sql id="base_column">
@@ -20,10 +19,10 @@
     <insert id="saveOne" parameterType="com.demo.crypt.bean.VipCard">
         insert into vip_card
             (card_no, name, id_number, phone_number)
-        values (#{cardNo, javaType=crypt},
-                #{name, javaType=crypt},
-                #{idNumber, javaType=crypt},
-                #{phoneNumber, javaType=crypt})
+        values (#{cardNo, javaType=Crypt},
+                #{name, javaType=Crypt},
+                #{idNumber, javaType=Crypt},
+                #{phoneNumber, javaType=Crypt})
     </insert>
 
     <select id="findById" resultMap="VipCardMap">
@@ -38,7 +37,7 @@
         select
         <include refid="base_column"/>
         from vip_card
-        where card_no in (#{cardNo, javaType=crypt}, #{cardNo})
+        where card_no in (#{cardNo, javaType=Crypt}, #{cardNo})
         limit 1
     </select>
 
@@ -46,7 +45,7 @@
         select
         <include refid="base_column"/>
         from vip_card
-        where card_no in (#{phoneNumber, javaType=crypt}, #{phoneNumber})
+        where card_no in (#{phoneNumber, javaType=Crypt}, #{phoneNumber})
         limit 1
     </select>
 

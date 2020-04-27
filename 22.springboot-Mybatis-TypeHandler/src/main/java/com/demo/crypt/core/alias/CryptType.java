@@ -7,6 +7,6 @@ import org.apache.ibatis.type.Alias;
  * @description 自定义Mybatis Java类型
  * @date 2020/4/26
  */
-@Alias("crypt")
+@Alias("Crypt")
 public class CryptType {
 }
