@@ -1,0 +1,30 @@
+server:
+  port: 8080
+
+spring:
+  kafka:
+    # kafka 地址，多个用 “，”隔开
+    bootstrap-servers: localhost:9092
+    template:
+      # 默认 topic
+      default-topic: kafka_test
+    # 生产者配置
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+    # 消费者配置
+    consumer:
+      group-id: kafka-consumer
+      auto-offset-reset: latest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      isolation-level: read_committed
+      enable-auto-commit: true
+    # kafka admin 配置，用于管理 topic
+    admin:
+      client-id: neko-kafka
+    # listener 配置，作用于 @KafkaListener
+    listener:
+      type: batch
+      concurrency: 4
+      poll-timeout: 3000
