@@ -4,7 +4,7 @@ server:
 spring:
   kafka:
     # kafka 地址，多个用 “，”隔开
-    bootstrap-servers: localhost:9092
+    bootstrap-servers: 127.0.0.1:9092
     template:
       # 默认 topic
       default-topic: kafka_test
@@ -12,6 +12,7 @@ spring:
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      retries: 3
     # 消费者配置
     consumer:
       group-id: kafka-consumer
@@ -23,6 +24,7 @@ spring:
     # kafka admin 配置，用于管理 topic
     admin:
       client-id: neko-kafka
+      fail-fast: true
     # listener 配置，作用于 @KafkaListener
     listener:
       type: batch
