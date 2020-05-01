@@ -16,6 +16,8 @@ SpringBoot与各个组件的整合，长期更新。
 10. [Spring Boot 整合 Elasticsearch](https://www.chenyangjie.com.cn/articles/2020/04/25/1587820360963.html)
 11. [Spring Boot 整合 Freemarker]()
 12. [Spring Boot 整合 Thymeleaf]()
+13. [Spring Boot Mybatis 优雅解决敏感信息加解密问题](https://www.chenyangjie.com.cn/articles/2020/04/27/1587965706728.html) 
+14. [Spring Boot 使用 Kafka 生产和消费消息](https://www.chenyangjie.com.cn/articles/2020/04/30/1588254024454.html)
 
 ## Spring Boot Security & OAuth2 教程
 1. [Spring Security 安全框架](https://www.chenyangjie.com.cn/articles/2020/03/15/1584254953580.html)
@@ -28,3 +30,7 @@ SpringBoot与各个组件的整合，长期更新。
 2. [Spring Cloud Consul 服务治理]()
 3. [Spring Cloud Nacos 服务治理]()
 4. [Spring Cloud Zuul 网关服务]()
+
+## 鸣谢
+文中部分内容参照 14+k star 开源项目：
+[https://github.com/wuyouzhuguli/SpringAll](https://github.com/wuyouzhuguli/SpringAll)
