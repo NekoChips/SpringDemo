@@ -48,7 +48,7 @@
 </div>
 <script src="https://cdn.bootcss.com/sockjs-client/0.3.4/sockjs.min.js"></script>
 <script type="text/javascript">
-    let  text = document.querySelector('#text');
+    let text = document.querySelector('#text');
     let connectBtn = document.querySelector("#connect");
     let sentBtn = document.querySelector("#sent");
     let disconnectBtn = document.querySelector("#disconnect");
@@ -58,7 +58,7 @@
 
     function connect() {
         // ws = new WebSocket("ws://localhost:8080/ws");
-        ws = new SockJS("/connect");
+        ws = new SockJS("/connect/001");
 
 
         ws.onopen = function () {
