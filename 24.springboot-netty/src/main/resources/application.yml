@@ -1,0 +1,8 @@
+server:
+  address: localhost
+  port: 8080
+
+bio:
+  enable: true
+  port: 18080
+  
