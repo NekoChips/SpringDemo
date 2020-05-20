@@ -62,6 +62,7 @@ public class BioClient {
             if (socket != null) {
                 try {
                     socket.close();
+                    log.info("socket client closed.");
                 } catch (IOException e) {
                     // help gc
                     socket = null;

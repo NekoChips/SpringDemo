@@ -34,7 +34,7 @@ public class BioServer {
     @SuppressWarnings("InfiniteLoopStatement")
     public void start() {
         try {
-            ThreadPoolExecutor threadPool = new ThreadPoolExecutor(1, 5, 0L, TimeUnit.MILLISECONDS,
+            ThreadPoolExecutor threadPool = new ThreadPoolExecutor(2, 5, 0L, TimeUnit.MILLISECONDS,
                     new ArrayBlockingQueue<>(5), (ThreadFactory) Thread::new);
             ServerSocket serverSocket = new ServerSocket(port);
             log.info("socket server start with port: {}", port);
@@ -72,13 +72,6 @@ public class BioServer {
             }
         } catch (IOException e) {
             log.error("handler socket error! ", e);
-        } finally {
-            try {
-                socket.close();
-                log.info("socket client closed.");
-            } catch (IOException e) {
-                log.error("socket client close fail!", e);
-            }
-        }
+        } 
     }
 }
