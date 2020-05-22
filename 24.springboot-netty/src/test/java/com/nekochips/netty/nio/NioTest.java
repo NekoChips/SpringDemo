@@ -1,4 +1,4 @@
-package com.nekochips.netty.bio;
+package com.nekochips.netty.nio;
 
 import com.nekochips.netty.NettyDemoApplication;
 import org.junit.Test;
@@ -9,30 +9,30 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 /**
  * @author NekoChips
- * @description BioServer 测试类
- * @date 2020/5/19
+ * @description nio 测试类
+ * @date 2020/5/20
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = NettyDemoApplication.class)
-public class BioTest {
+public class NioTest {
 
     @Autowired
-    private BioServer bioServer;
+    private NioServer nioServer;
 
     @Autowired
-    private BioClient bioClient;
-    
+    private NioClient nioClient;
+
     @Test
     public void testServer() {
-        bioServer.start();
+        nioServer.init();
+        nioServer.listen();
     }
-    
+
     @Test
     public void testClient() {
-        for (int i = 0; i < 10; i++) {
-            bioClient.start();
-            bioClient.send("hello i am a test message from client " + (i + 1));
-        }
-
+        nioClient.start();
+        nioClient.connect();
+        nioClient.listen();
     }
+
 }

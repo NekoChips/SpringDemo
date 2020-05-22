@@ -76,7 +76,7 @@ public class NioClient {
         writeBuffer.put(bytes);
         writeBuffer.flip();
         try {
-            clientChannel.write(writeBuffer);
+            sc.write(writeBuffer);
         } catch (IOException e) {
             log.error("nio client send message fail.", e);
         }
@@ -101,13 +101,14 @@ public class NioClient {
                             } 
                         }
                         if (key.isReadable()) {
-                            ByteBuffer readBuffer = ByteBuffer.allocate(1024);
+                            ByteBuffer readBuffer = ByteBuffer.allocate(2048);
                             int readBytes = sc.read(readBuffer);
                             if (readBytes > 0) {
                                 readBuffer.flip();
                                 byte[] bytes = new byte[readBuffer.remaining()];
                                 readBuffer.get(bytes);
                                 log.info("收到服务端消息： " + new String(bytes, StandardCharsets.UTF_8));
+                                stop();
                             } else {
                                 key.cancel();
                                 sc.close();

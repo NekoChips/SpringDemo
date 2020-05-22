@@ -6,3 +6,7 @@ bio:
   enable: true
   port: 18080
   
+nio:
+  enable: true
+  port: 18081
+  

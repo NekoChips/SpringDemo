@@ -12,6 +12,7 @@ import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
+import java.nio.charset.StandardCharsets;
 import java.util.Iterator;
 
 /**
@@ -103,19 +104,23 @@ public class NioServer {
 
     private void handleRead(SelectionKey key) throws IOException {
         SocketChannel channel = (SocketChannel) key.channel();
-        ByteBuffer byteBuffer = ByteBuffer.allocate(1024);
-        int read = channel.read(byteBuffer);
+        ByteBuffer readBuffer = ByteBuffer.allocate(1024);
+        int read = channel.read(readBuffer);
         if (read > 0) {
-            byte[] bytes = byteBuffer.array();
-            String message = new String(bytes).trim();
+            byte[] bytes = readBuffer.array();
+            String message = new String(bytes, StandardCharsets.UTF_8);
             log.info("receive message from client: [{}]", message);
-            ByteBuffer outBuffer = ByteBuffer.wrap(("消息 [ " + message + " ] 发送成功").getBytes());
-            outBuffer.flip();
-            channel.write(outBuffer);
+            String response = "消息 [ " + message + " ] 发送成功";
+            ByteBuffer writeBuffer = ByteBuffer.allocate(response.getBytes().length);
+            writeBuffer.put(response.getBytes());
+            writeBuffer.flip();
+            channel.write(writeBuffer);
         }
         else{
             log.info("no message to read.");
         }
+        key.cancel();
+        channel.close();
     }
     
 
