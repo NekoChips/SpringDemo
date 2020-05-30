@@ -1,0 +1,19 @@
+server:
+  address: localhost
+  port: 8080
+  
+spring:
+  security:
+    user:
+      name: admin
+      password: admin
+  mail:
+    host: smtp.163.com
+    username: example@163.com
+    password: user_password
+  boot:
+    admin:
+      notify:
+        mail:
+          from: example@163.com
+          to: to_example@163.com
