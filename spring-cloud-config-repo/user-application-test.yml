@@ -1,5 +1,5 @@
 server:
-  port:60002
+  port: 60002
 spring:
   datasource:
     type: com.mysql.cj.jdbc.MysqlDataSource
