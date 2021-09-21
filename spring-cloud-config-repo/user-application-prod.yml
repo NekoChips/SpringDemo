@@ -1,0 +1,13 @@
+server:
+  port:8001
+spring:
+  datasource:
+    type: com.mysql.cj.jdbc.MysqlDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.7.0.1:3306/prod?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    username: neko
+    password: neko
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
