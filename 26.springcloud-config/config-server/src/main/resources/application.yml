@@ -1,0 +1,58 @@
+server:
+  port: 8888
+spring:
+  application:
+    name: neko-config-server
+  cloud:
+    config:
+      server:
+        git:
+          # 配置 Git 仓库的地址
+          uri: git@github.com:NekoChips/SpringDemo.git
+          search-paths: spring-cloud-config-repo
+          # 访问 ssh 私钥的口令
+          passphrase: Cyj514635905
+          ignore-local-ssh-settings: true
+          private-key: |
+            -----BEGIN RSA PRIVATE KEY-----
+            Proc-Type: 4,ENCRYPTED
+            DEK-Info: AES-128-CBC,0EEEEF7F8D359CCC9F7D2D74D87ABF84
+
+            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
+            -----END RSA PRIVATE KEY-----

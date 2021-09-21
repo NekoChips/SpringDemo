@@ -1,0 +1,12 @@
+spring:
+  application:
+    # 对应 config server 所获取的配置文件中的 application name
+    name: user-application
+  cloud:
+    config:
+      # 配置服务的访问地址
+      uri: http://localhost:8888/
+      # 对应 config server 所获取的配置文件中的 profile
+      profile: dev
+      # 对应 git 仓库中的分支名，默认为 master
+      label: master
